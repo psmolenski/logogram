@@ -1,10 +1,10 @@
 import tpl from './logogram.component.html';
 
 class LogogramComponentController {
-  board: number[][];
+  pattern: number[][];
 
   $onInit() {
-    this.board = [
+    this.pattern = [
       [0, 0, 1, 1, 0, 0],
       [0, 0, 1, 1, 0, 0],
       [1, 1, 1, 1, 1, 1],
