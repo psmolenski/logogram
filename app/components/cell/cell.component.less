@@ -1,0 +1,21 @@
+.lgg-board__cell {
+  border: 1px solid #333;
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  text-align: center;
+  line-height: 30px;
+  font-size: 20px;
+
+  &--filled {
+    background: #333333;
+  }
+
+  &--flagged {
+    background: #f0f0f0;
+    &:after {
+      content: '×';
+      color: #bbb;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<table class="lgg-board">
+    <tbody>
+        <tr ng-repeat="row in $ctrl.board track by $index">
+            <td ng-repeat="cell in row track by $index">
+                <cell filled="cell === 1" flagged="cell === 0"></cell>
+            </td>
+        </tr>
+    </tbody>
+</table>
