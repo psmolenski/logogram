@@ -1,6 +1,17 @@
 <table class="lgg-board" ng-mouseleave="$ctrl.clearDraggedCell()">
     <tbody>
+        <tr>
+            <td></td>
+            <th ng-repeat="groupsInColumn in $ctrl.board.groupsInColumns">
+                <div ng-repeat="group in groupsInColumn">{{group.size}}</div>
+            </th>
+        </tr>
         <tr ng-repeat="row in $ctrl.board.cells">
+            <th>
+                <span ng-repeat="group in $ctrl.board.getGroupsForRow($index)">
+                    {{group.size}}
+                </span>
+            </th>
             <td ng-repeat="cell in row track by $index">
                 <cell cell="cell"
                       do-primary-action="$ctrl.toggleCellFill(cell)"
