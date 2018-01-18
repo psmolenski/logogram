@@ -1,8 +1,12 @@
 export default class Cell {
+  public readonly row: number;
+  public readonly column: number;
   private state: CellState = CellState.BLANK;
   private patternState: CellState;
 
-  constructor(filled: boolean) {
+  constructor(row: number, column: number, filled: boolean) {
+    this.row = row;
+    this.column = column;
     this.patternState = filled ? CellState.FILLED : CellState.BLANK;
   }
 
@@ -34,3 +38,5 @@ export default class Cell {
 enum CellState {
   BLANK, FILLED, FLAGGED
 }
+
+export {CellState};

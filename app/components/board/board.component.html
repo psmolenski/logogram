@@ -1,8 +1,14 @@
-<table class="lgg-board">
+<table class="lgg-board" ng-mouseleave="$ctrl.clearDraggedCell()">
     <tbody>
         <tr ng-repeat="row in $ctrl.board.cells">
             <td ng-repeat="cell in row track by $index">
-                <cell cell="cell" do-primary-action="$ctrl.toggleCellFill(cell)" do-secondary-action="$ctrl.toggleCellFlag(cell)"></cell>
+                <cell cell="cell"
+                      do-primary-action="$ctrl.toggleCellFill(cell)"
+                      do-secondary-action="$ctrl.toggleCellFlag(cell)"
+                      accept-drag="$ctrl.isCellAcceptingDrag(cell)"
+                      do-drag-action="$ctrl.toggleDragState(cell)"
+                      do-drag-end-action="$ctrl.clearDraggedCell()"
+                ></cell>
             </td>
         </tr>
     </tbody>

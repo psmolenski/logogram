@@ -6,6 +6,9 @@ class CellComponentClass {
   private cell: Cell;
   private doPrimaryAction: Function;
   private doSecondaryAction: Function;
+  private acceptDrag: boolean;
+  private doDragAction: Function;
+  private doDragEndAction: Function;
 
   getCssClass() : object {
     return {
@@ -22,14 +25,32 @@ class CellComponentClass {
     }
   }
 
+
+  onMouseEnter() {
+    if (this.acceptDrag) {
+      this.doDragAction();
+    } else {
+      this.doDragEndAction();
+    }
+  }
+
+  onMouseUp() {
+    if (this.acceptDrag) {
+      this.doDragEndAction();
+    }
+  }
+
 }
 
 export default {
   templateUrl: tpl,
   bindings: {
     cell: '<',
+    acceptDrag: '<',
     doPrimaryAction: '&',
-    doSecondaryAction: '&'
+    doSecondaryAction: '&',
+    doDragAction: '&',
+    doDragEndAction: '&'
   },
   controller: CellComponentClass
 }
