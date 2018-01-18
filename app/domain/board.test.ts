@@ -11,7 +11,9 @@ describe('getGroupsForRow', function () {
       [0, 1, 1, 1, 1, 1],
       [1, 0, 0, 0, 0, 1],
       [0, 1, 1, 1, 1, 0],
-      [1, 1, 0, 0, 1, 1]
+      [1, 1, 0, 0, 1, 1],
+      [1, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 1],
     ];
 
     const groupSizes = [
@@ -23,7 +25,9 @@ describe('getGroupsForRow', function () {
       [5],
       [1, 1],
       [4],
-      [2, 2]
+      [2, 2],
+      [1],
+      [1]
     ];
 
     const board = new Board(pattern);
@@ -39,5 +43,38 @@ describe('getGroupsForRow', function () {
     });
 
 
+  });
+});
+
+test('columnGroups', () => {
+  const pattern = [
+    [0, 1, 1, 0, 0, 1, 0, 0, 1],
+    [0, 1, 1, 0, 0, 0, 0, 1, 0],
+    [0, 1, 0, 1, 0, 0, 0, 1, 1],
+    [0, 1, 0, 1, 0, 0, 0, 1, 0],
+    [0, 1, 0, 0, 1, 0, 0, 1, 1],
+    [0, 1, 0, 0, 1, 0, 1, 0, 0],
+  ];
+
+  const groupSizes = [
+    [],
+    [6],
+    [2],
+    [2],
+    [2],
+    [1],
+    [1],
+    [4],
+    [1, 1, 1]
+  ];
+
+  const board = new Board(pattern);
+
+  board.groupsInColumns.forEach((groupsInColumn, columnIndex) => {
+    expect(groupsInColumn.length).toEqual(groupSizes[columnIndex].length);
+
+    groupsInColumn.forEach((group, groupIndex) => {
+      expect(group.size).toEqual(groupSizes[columnIndex][groupIndex]);
+    })
   });
 });
