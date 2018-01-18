@@ -77,6 +77,8 @@ class BoardComponentController {
   }
 }
 
+export {BoardComponentController};
+
 export default {
   templateUrl: tpl,
   bindings: {

@@ -9,7 +9,9 @@
     "start": "webpack-dev-server --open",
     "test:e2e": "npm-run-all --parallel --race server protractor",
     "protractor": "protractor e2e/protractor.config.js",
-    "server": "http-server dist -c-1 "
+    "server": "http-server dist -c-1 ",
+    "test:unit": "jest",
+    "test:unit:watch": "jest --watch"
   },
   "author": "Paweł Smoleński",
   "license": "ISC",
@@ -35,5 +37,21 @@
   },
   "dependencies": {
     "angular": "^1.6.8"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$",
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json",
+      "node"
+    ],
+    "moduleNameMapper": {
+      "\\.(html)$": "<rootDir>/__mocks__/htmlMock.ts",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.ts"
+    }
   }
 }
