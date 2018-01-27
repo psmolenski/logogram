@@ -6,7 +6,7 @@
                 <div ng-repeat="group in groupsInColumn">{{group.size}}</div>
             </th>
         </tr>
-        <tr ng-repeat="row in $ctrl.board.cells">
+        <tr ng-repeat="row in $ctrl.board.cellsInRows">
             <th>
                 <span ng-repeat="group in $ctrl.board.getGroupsForRow($index)">
                     {{group.size}}

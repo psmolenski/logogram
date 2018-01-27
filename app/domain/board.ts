@@ -3,14 +3,14 @@ import Group from "./group";
 import * as _ from 'lodash';
 
 export default class Board {
-  public cells: Cell[][];
+  public cellsInRows: Cell[][];
   public readonly cellsInColumns: Cell[][];
   private groupsInRows: Group[][];
   public readonly groupsInColumns: Group[][];
 
   constructor(pattern: number[][]) {
-    this.cells = pattern.map((row, rowIndex) => row.map((filled, columnIndex) => new Cell(rowIndex, columnIndex, filled === 1)));
-    this.cellsInColumns = _.zip(...this.cells);
+    this.cellsInRows = pattern.map((row, rowIndex) => row.map((filled, columnIndex) => new Cell(rowIndex, columnIndex, filled === 1)));
+    this.cellsInColumns = _.zip(...this.cellsInRows);
     this.groupsInRows = pattern.map(row => this.createGroups(row));
     this.groupsInColumns = _.zip(...pattern).map((column : number[]) => this.createGroups(column));
   }
@@ -42,7 +42,7 @@ export default class Board {
   }
 
   hasAllCellsInDesiredState() {
-    return this.cells.every(row => {
+    return this.cellsInRows.every(row => {
       return row.every(cell => cell.isInDesiredState());
     });
   }

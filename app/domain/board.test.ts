@@ -80,7 +80,7 @@ it('columnGroups', () => {
 });
 
 describe("hasAllCellsInDesiredState", function () {
-  it('should return true if all cells are in desired state', function () {
+  it('should return true if all cellsInRows are in desired state', function () {
     const pattern = [
       [0, 1],
       [1, 0]
@@ -88,12 +88,12 @@ describe("hasAllCellsInDesiredState", function () {
 
     const board = new Board(pattern);
 
-    board.cells[0][0].clear();
-    board.cells[0][1].fill();
-    board.cells[1][0].fill();
-    board.cells[1][1].clear();
+    board.cellsInRows[0][0].clear();
+    board.cellsInRows[0][1].fill();
+    board.cellsInRows[1][0].fill();
+    board.cellsInRows[1][1].clear();
 
-    board.cells.forEach(row => {
+    board.cellsInRows.forEach(row => {
       row.forEach(cell => {
         expect(cell.isInDesiredState()).toBeTruthy();
       });
@@ -102,7 +102,7 @@ describe("hasAllCellsInDesiredState", function () {
     expect(board.hasAllCellsInDesiredState()).toBeTruthy();
   });
 
-  it('should return true if all cells are in desired state and some cells are flagged', function () {
+  it('should return true if all cellsInRows are in desired state and some cellsInRows are flagged', function () {
     const pattern = [
       [0, 1],
       [1, 0]
@@ -110,12 +110,12 @@ describe("hasAllCellsInDesiredState", function () {
 
     const board = new Board(pattern);
 
-    board.cells[0][0].flag();
-    board.cells[0][1].fill();
-    board.cells[1][0].fill();
-    board.cells[1][1].flag();
+    board.cellsInRows[0][0].flag();
+    board.cellsInRows[0][1].fill();
+    board.cellsInRows[1][0].fill();
+    board.cellsInRows[1][1].flag();
 
-    board.cells.forEach(row => {
+    board.cellsInRows.forEach(row => {
       row.forEach(cell => {
         expect(cell.isInDesiredState()).toBeTruthy();
       });
@@ -132,10 +132,10 @@ describe("hasAllCellsInDesiredState", function () {
 
     const board = new Board(pattern);
 
-    board.cells[0][0].clear();
-    board.cells[0][1].fill();
-    board.cells[1][0].clear(); //should be filled
-    board.cells[1][1].clear();
+    board.cellsInRows[0][0].clear();
+    board.cellsInRows[0][1].fill();
+    board.cellsInRows[1][0].clear(); //should be filled
+    board.cellsInRows[1][1].clear();
 
     expect(board.hasAllCellsInDesiredState()).toBeFalsy();
   });
