@@ -1,7 +1,7 @@
 import Board from "./board";
 
 describe('getGroupsForRow', function () {
-  test('should return groups for all rows', () => {
+  it('should return groups for all rows', () => {
     const pattern = [
       [0, 0, 0, 0, 0, 0],
       [1, 1, 1, 1, 1, 1],
@@ -46,7 +46,7 @@ describe('getGroupsForRow', function () {
   });
 });
 
-test('columnGroups', () => {
+it('columnGroups', () => {
   const pattern = [
     [0, 1, 1, 0, 0, 1, 0, 0, 1],
     [0, 1, 1, 0, 0, 0, 0, 1, 0],
@@ -78,3 +78,68 @@ test('columnGroups', () => {
     })
   });
 });
+
+describe("hasAllCellsInDesiredState", function () {
+  it('should return true if all cells are in desired state', function () {
+    const pattern = [
+      [0, 1],
+      [1, 0]
+    ];
+
+    const board = new Board(pattern);
+
+    board.cells[0][0].clear();
+    board.cells[0][1].fill();
+    board.cells[1][0].fill();
+    board.cells[1][1].clear();
+
+    board.cells.forEach(row => {
+      row.forEach(cell => {
+        expect(cell.isInDesiredState()).toBeTruthy();
+      });
+    });
+
+    expect(board.hasAllCellsInDesiredState()).toBeTruthy();
+  });
+
+  it('should return true if all cells are in desired state and some cells are flagged', function () {
+    const pattern = [
+      [0, 1],
+      [1, 0]
+    ];
+
+    const board = new Board(pattern);
+
+    board.cells[0][0].flag();
+    board.cells[0][1].fill();
+    board.cells[1][0].fill();
+    board.cells[1][1].flag();
+
+    board.cells.forEach(row => {
+      row.forEach(cell => {
+        expect(cell.isInDesiredState()).toBeTruthy();
+      });
+    });
+
+    expect(board.hasAllCellsInDesiredState()).toBeTruthy();
+  });
+
+  it('should return false if at least one cell is not in its desired state', function () {
+    const pattern = [
+      [0, 1],
+      [1, 0]
+    ];
+
+    const board = new Board(pattern);
+
+    board.cells[0][0].clear();
+    board.cells[0][1].fill();
+    board.cells[1][0].clear(); //should be filled
+    board.cells[1][1].clear();
+
+    expect(board.hasAllCellsInDesiredState()).toBeFalsy();
+  });
+});
+
+
+

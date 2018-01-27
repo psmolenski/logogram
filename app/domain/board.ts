@@ -3,7 +3,7 @@ import Group from "./group";
 import * as _ from 'lodash';
 
 export default class Board {
-  private cells: Cell[][];
+  public cells: Cell[][];
   public readonly cellsInColumns: Cell[][];
   private groupsInRows: Group[][];
   public readonly groupsInColumns: Group[][];
@@ -39,6 +39,12 @@ export default class Board {
 
       }, <Group[]>[])
       .filter(group => group.type === 1);
+  }
+
+  hasAllCellsInDesiredState() {
+    return this.cells.every(row => {
+      return row.every(cell => cell.isInDesiredState());
+    });
   }
 
 }

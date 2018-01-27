@@ -2,12 +2,12 @@ export default class Cell {
   public readonly row: number;
   public readonly column: number;
   private state: CellState = CellState.BLANK;
-  private patternState: CellState;
+  public readonly desiredState: CellState;
 
   constructor(row: number, column: number, filled: boolean) {
     this.row = row;
     this.column = column;
-    this.patternState = filled ? CellState.FILLED : CellState.BLANK;
+    this.desiredState = filled ? CellState.FILLED : CellState.BLANK;
   }
 
   fill() : void {
@@ -32,6 +32,14 @@ export default class Cell {
 
   isBlank() : boolean {
     return this.state === CellState.BLANK;
+  }
+
+  isInDesiredState() {
+    if (this.desiredState === CellState.BLANK) {
+      return this.isBlank() || this.isFlagged();
+    }
+
+    return this.state === this.desiredState;
   }
 }
 
