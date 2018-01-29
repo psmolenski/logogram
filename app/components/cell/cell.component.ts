@@ -1,14 +1,23 @@
 import tpl from './cell.component.html';
 import "./cell.component.less";
 import Cell from "../../domain/cell";
+import {INgModelController} from "angular";
 
 class CellComponentClass {
-  private cell: Cell;
+  private ngModel: INgModelController;
   private doPrimaryAction: Function;
   private doSecondaryAction: Function;
   private acceptDrag: boolean;
   private doDragAction: Function;
   private doDragEndAction: Function;
+
+  get cell() : Cell {
+    return this.ngModel.$viewValue;
+  }
+
+  set cell(newCell) {
+    this.ngModel.$setViewValue(newCell);
+  }
 
   getCssClass() : object {
     return {
@@ -24,7 +33,6 @@ class CellComponentClass {
       this.doSecondaryAction();
     }
   }
-
 
   onMouseEnter() {
     if (this.acceptDrag) {
@@ -43,14 +51,16 @@ class CellComponentClass {
 }
 
 export default {
-  templateUrl: tpl,
+  template: tpl,
   bindings: {
-    cell: '<',
     acceptDrag: '<',
     doPrimaryAction: '&',
     doSecondaryAction: '&',
     doDragAction: '&',
     doDragEndAction: '&'
+  },
+  require: {
+    'ngModel': 'ngModel'
   },
   controller: CellComponentClass
 }

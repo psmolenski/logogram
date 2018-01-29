@@ -1,25 +1,35 @@
-export default class Cell {
+import {Record} from "immutable";
+
+enum CellState {
+  BLANK, FILLED, FLAGGED
+}
+
+const defaultCellProperties = {row: -1, column: -1, state: CellState.BLANK, desiredState: null};
+
+class Cell extends Record(defaultCellProperties) {
   public readonly row: number;
   public readonly column: number;
-  private state: CellState = CellState.BLANK;
+  public readonly state: CellState;
   public readonly desiredState: CellState;
 
   constructor(row: number, column: number, filled: boolean) {
-    this.row = row;
-    this.column = column;
-    this.desiredState = filled ? CellState.FILLED : CellState.BLANK;
+    super({
+      row: row,
+      column: column,
+      desiredState: filled ? CellState.FILLED : CellState.BLANK
+    });
   }
 
-  fill() : void {
-    this.state = CellState.FILLED;
+  fill() : Cell {
+    return this.set('state', CellState.FILLED) as this;
   }
 
-  flag() : void {
-    this.state = CellState.FLAGGED;
+  flag() : Cell {
+    return this.set('state', CellState.FLAGGED) as this;
   }
 
-  clear() : void {
-    this.state = CellState.BLANK;
+  blank() : Cell {
+    return this.set('state', CellState.BLANK) as this;
   }
 
   isFilled() : boolean {
@@ -43,8 +53,5 @@ export default class Cell {
   }
 }
 
-enum CellState {
-  BLANK, FILLED, FLAGGED
-}
-
-export {CellState};
+export {Cell, CellState};
+export default Cell;

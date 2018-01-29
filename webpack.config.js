@@ -35,7 +35,7 @@ module.exports = {
       },
       {
         test: /component\.html$/,
-        loader: "ngtemplate-loader!html-loader"
+        loader: "html-loader?exportAsEs6Default"
       },
       {
         test: /\.less$/,

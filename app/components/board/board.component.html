@@ -2,23 +2,23 @@
     <tbody>
         <tr>
             <td></td>
-            <th ng-repeat="groupsInColumn in $ctrl.board.groupsInColumns">
+            <th ng-repeat="groupsInColumn in $ctrl.groupsInColumns">
                 <div ng-repeat="group in groupsInColumn">{{group.size}}</div>
             </th>
         </tr>
-        <tr ng-repeat="row in $ctrl.board.cellsInRows">
+        <tr ng-repeat="row in $ctrl.cellsInRows">
             <th>
-                <span ng-repeat="group in $ctrl.board.getGroupsForRow($index)">
+                <span ng-repeat="group in $ctrl.groupsInRows[$index]">
                     {{group.size}}
                 </span>
             </th>
             <td ng-repeat="cell in row track by $index">
-                <cell cell="cell"
+                <cell ng-model="cell"
                       do-primary-action="$ctrl.toggleCellFill(cell)"
                       do-secondary-action="$ctrl.toggleCellFlag(cell)"
-                      accept-drag="$ctrl.isCellAcceptingDrag(cell)"
+                      accept-drag="$ctrl.isCellAcceptingDrag({cell: cell})"
                       do-drag-action="$ctrl.toggleDragState(cell)"
-                      do-drag-end-action="$ctrl.clearDraggedCell()"
+                      do-drag-end-action="$ctrl.onToggleDragEnd({cell: cell})"
                 ></cell>
             </td>
         </tr>

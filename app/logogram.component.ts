@@ -4,17 +4,25 @@ class LogogramComponentController {
   pattern: number[][];
 
   $onInit() {
+  //   this.pattern = [
+  //     [0, 0, 1, 1, 0, 0],
+  //     [0, 0, 1, 1, 0, 0],
+  //     [1, 1, 1, 1, 1, 1],
+  //     [1, 1, 1, 1, 1, 1],
+  //     [0, 0, 1, 1, 0, 0],
+  //     [1, 0, 1, 1, 0, 1]]
+  // }
+
     this.pattern = [
-      [0, 0, 1, 1, 0, 0],
-      [0, 0, 1, 1, 0, 0],
-      [1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1],
-      [0, 0, 1, 1, 0, 0],
-      [1, 0, 1, 1, 0, 1]]
+      [1, 0],
+      [0, 1]
+    ];
+
   }
+
 }
 
 export default {
-  templateUrl: tpl,
+  template: tpl,
   controller: LogogramComponentController
 }

@@ -1,13 +1,15 @@
 import {BoardComponentController} from "./board.component";
 
+let ctrl: BoardComponentController;
+
+beforeEach(() => {
+  ctrl = new BoardComponentController();
+});
+
+
 describe("toggleCellFill", () => {
-  let ctrl: BoardComponentController;
-
-  beforeEach(() => {
-    ctrl = new BoardComponentController();
-  });
-
-  test("should be defined", () => {
+  it("should be defined", () => {
     expect(ctrl.toggleCellFill).toBeDefined();
   });
 });
+

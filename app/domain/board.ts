@@ -1,49 +1,45 @@
-import Cell from "./cell";
-import Group from "./group";
+import Cell, {CellState} from "./cell";
 import * as _ from 'lodash';
+import {fromJS, List, Record} from "immutable";
 
-export default class Board {
-  public cellsInRows: Cell[][];
-  public readonly cellsInColumns: Cell[][];
-  private groupsInRows: Group[][];
-  public readonly groupsInColumns: Group[][];
+export default class Board extends Record({cellsInRows: null}){
+  public readonly cellsInRows: List<List<Cell>>;
 
   constructor(pattern: number[][]) {
-    this.cellsInRows = pattern.map((row, rowIndex) => row.map((filled, columnIndex) => new Cell(rowIndex, columnIndex, filled === 1)));
-    this.cellsInColumns = _.zip(...this.cellsInRows);
-    this.groupsInRows = pattern.map(row => this.createGroups(row));
-    this.groupsInColumns = _.zip(...pattern).map((column : number[]) => this.createGroups(column));
+    const cellsInRows = Board.createCellsInRowsFromPattern(pattern);
+
+    super({cellsInRows});
   }
 
-  getGroupsForRow(rowIndex: number) : Group[] {
-    return this.groupsInRows[rowIndex];
+  static createCellsInRowsFromPattern(pattern: number[][]) : List<List<Cell>> {
+    const mutableCollection = pattern.map((row, rowIndex) => {
+      return row.map((filled, columnIndex) => {
+        const desiredState = filled === 1 ? CellState.FILLED : CellState.BLANK;
+
+        return new Cell(rowIndex, columnIndex, filled === 1);
+      });
+    });
+
+    return fromJS(mutableCollection);
   }
 
-  private createGroups(arr : number[]): Group[] {
-    return arr
-      .reduce((groups: Group[], cellType: number) => {
-        if (groups.length === 0) {
-          return [new Group(cellType, 1)];
-        }
-
-        const lastGroup = <Group> groups.pop();
-
-        if (lastGroup.type === cellType) {
-          groups.push(new Group(lastGroup.type, lastGroup.size + 1));
-        } else {
-          groups.push(lastGroup);
-          groups.push(new Group(cellType, 1));
-        }
-
-        return groups;
-
-      }, <Group[]>[])
-      .filter(group => group.type === 1);
+  updateCell(row: number, column: number, cell: Cell){
+    return this.setIn(['cellsInRows', row, column], cell) as this;
   }
 
   hasAllCellsInDesiredState() {
     return this.cellsInRows.every(row => {
-      return row.every(cell => cell.isInDesiredState());
+      if (_.isUndefined(row)) {
+        return false;
+      }
+
+      return  row.every(cell => {
+        if (_.isUndefined(cell)){
+          return false;
+        }
+
+        return cell.isInDesiredState();
+      });
     });
   }
 
