@@ -4,14 +4,13 @@ import * as _ from "lodash";
 import Group from "./group";
 
 class Puzzle {
-  private _board: Board;
-  private _completed: boolean;
+  completed: boolean;
 
+  public readonly board: Board;
   public readonly groupsInRows: Group[][];
   public readonly groupsInColumns: Group[][];
 
   public draggedCell: Cell | null = null;
-
 
   constructor(pattern: number[][]){
     this.board = new Board(pattern);
@@ -20,45 +19,28 @@ class Puzzle {
     this.groupsInColumns = _.zip(...pattern).map((column : number[]) => this.createGroups(column));
   }
 
-  get board() : Board{
-    return this._board;
-  }
-
-  set board(newBoard) {
-    this._board = newBoard;
-    this._completed = this._board.hasAllCellsInDesiredState();
-  }
-
-  get completed() : boolean {
-    return this._completed;
-  }
-
   toggleCellFill(cell: Cell) {
-    let newCell = cell;
-
     if (cell.isBlank()) {
-      newCell = cell.fill();
+      cell.fill();
     } else if (cell.isFilled()) {
-      newCell = cell.blank();
+      cell.blank();
     } else {
       return;
     }
 
-    this.board = this.board.updateCell(newCell.row, newCell.column, newCell);
-    this.draggedCell = newCell;
+    this.draggedCell = cell;
   }
 
   toggleCellFlag(cell: Cell) {
-    let newCell = cell;
-
     if (cell.isBlank()) {
-      newCell = cell.flag();
+      cell.flag();
     } else if (cell.isFlagged()) {
-      newCell = cell.blank();
+      cell.blank();
+    } else {
+      return;
     }
 
-    this.board = this.board.updateCell(newCell.row, newCell.column, newCell);
-    this.draggedCell = newCell;
+    this.draggedCell = cell;
   }
 
   isDraggingCell() : boolean{
@@ -66,29 +48,25 @@ class Puzzle {
   }
 
   applyStateOfDraggedCell(cell: Cell) {
-    let newCell;
-
     if (this.draggedCell === null) {
       return;
     }
 
     if (this.draggedCell.isFilled() && cell.isBlank()) {
-      newCell = cell.fill();
+      cell.fill();
     } else if (this.draggedCell.isBlank() && cell.isFilled()) {
-      newCell = cell.blank();
+      cell.blank();
     } else if (this.draggedCell.isFlagged() && cell.isBlank()) {
-      newCell = cell.flag();
+      cell.flag();
     } else if (this.draggedCell.isBlank() && cell.isFlagged()) {
-      newCell = cell.blank();
-    } else {
-      return;
+      cell.blank();
     }
-
-    this.board = this.board.updateCell(newCell.row, newCell.column, newCell);
   }
 
   clearDraggedCell() {
     this.draggedCell = null;
+
+    this.completed = this.board.hasAllCellsInDesiredState();
   }
 
   isCellAcceptingDrag(cell: Cell) {

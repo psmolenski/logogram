@@ -1,18 +1,19 @@
-<table class="lgg-board" ng-mouseleave="$ctrl.clearDraggedCell()">
+<table class="lgg-board" ng-mouseleave="$ctrl.onToggleDragEnd({cell: cell})">
     <tbody>
         <tr>
             <td></td>
-            <th ng-repeat="groupsInColumn in $ctrl.groupsInColumns">
-                <div ng-repeat="group in groupsInColumn">{{group.size}}</div>
+            <th ng-repeat="groupsInColumn in ::$ctrl.groupsInColumns">
+                <div ng-repeat="group in ::groupsInColumn">{{group.size}}</div>
             </th>
         </tr>
-        <tr ng-repeat="row in $ctrl.cellsInRows">
+
+        <tr ng-repeat="row in ::$ctrl.cellsInRows">
             <th>
-                <span ng-repeat="group in $ctrl.groupsInRows[$index]">
+                <span ng-repeat="group in ::$ctrl.groupsInRows[$index]">
                     {{group.size}}
                 </span>
             </th>
-            <td ng-repeat="cell in row track by $index">
+            <td ng-repeat="cell in ::row">
                 <cell ng-model="cell"
                       do-primary-action="$ctrl.toggleCellFill(cell)"
                       do-secondary-action="$ctrl.toggleCellFlag(cell)"

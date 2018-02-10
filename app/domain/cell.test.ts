@@ -77,7 +77,7 @@ describe("changing cell state", function () {
   it('should set cell state to blank', function () {
     cell.fill();
     expect(cell.isBlank()).toBeFalsy();
-    cell.clear();
+    cell.blank();
     expect(cell.isBlank()).toBeTruthy();
   });
 });
@@ -85,7 +85,7 @@ describe("changing cell state", function () {
 describe("isInDesiredState", function () {
   it('should return true if cell BLANK and its desired state if BLANK', function () {
     const cell = new Cell(0, 0, false);
-    cell.clear();
+    cell.blank();
 
     expect(cell.desiredState).toEqual(CellState.BLANK);
     expect(cell.isBlank()).toBeTruthy();
@@ -113,7 +113,7 @@ describe("isInDesiredState", function () {
   it('should return false if cell is not in desired state', function () {
     const cell = new Cell(0, 0, true);
 
-    cell.clear();
+    cell.blank();
     expect(cell.desiredState).toEqual(CellState.FILLED);
     expect(cell.isFilled()).toBeFalsy();
     expect(cell.isInDesiredState()).toBeFalsy();

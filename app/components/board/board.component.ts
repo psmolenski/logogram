@@ -12,13 +12,6 @@ class BoardComponentController {
   private onToggleDragState : Function;
   private onToggleDragEnd : Function;
 
-  public cellsInRows: Cell[][];
-
-
-  $onInit() {
-    this.ngModel.$render = () => this.onBoardChange();
-  }
-
   get board() : Board {
     return this.ngModel.$viewValue;
   }
@@ -27,8 +20,8 @@ class BoardComponentController {
     this.ngModel.$setViewValue(newBoard);
   }
 
-  onBoardChange() {
-    this.cellsInRows = this.board.cellsInRows.toArray().map(row => row.toArray());
+  get cellsInRows() {
+    return this.board.cellsInRows;
   }
 
   toggleCellFill(cell: Cell) {

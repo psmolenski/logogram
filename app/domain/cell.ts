@@ -1,35 +1,30 @@
-import {Record} from "immutable";
-
 enum CellState {
   BLANK, FILLED, FLAGGED
 }
 
-const defaultCellProperties = {row: -1, column: -1, state: CellState.BLANK, desiredState: null};
-
-class Cell extends Record(defaultCellProperties) {
+class Cell {
   public readonly row: number;
   public readonly column: number;
-  public readonly state: CellState;
   public readonly desiredState: CellState;
+  public state: CellState;
 
   constructor(row: number, column: number, filled: boolean) {
-    super({
-      row: row,
-      column: column,
-      desiredState: filled ? CellState.FILLED : CellState.BLANK
-    });
+    this.row = row;
+    this.column = column;
+    this.desiredState = filled ? CellState.FILLED : CellState.BLANK;
+    this.state = CellState.BLANK;
   }
 
-  fill() : Cell {
-    return this.set('state', CellState.FILLED) as this;
+  fill() : void {
+    this.state = CellState.FILLED;
   }
 
-  flag() : Cell {
-    return this.set('state', CellState.FLAGGED) as this;
+  flag() : void {
+    this.state = CellState.FLAGGED;
   }
 
-  blank() : Cell {
-    return this.set('state', CellState.BLANK) as this;
+  blank() : void {
+    this.state = CellState.BLANK;
   }
 
   isFilled() : boolean {
