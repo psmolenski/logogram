@@ -1,10 +1,10 @@
 <board ng-model="$ctrl.board"
        groups-in-rows="$ctrl.puzzle.groupsInRows"
        groups-in-columns="$ctrl.puzzle.groupsInColumns"
-       on-toggle-cell-fill="$ctrl.puzzle.toggleCellFill(cell)"
-       on-toggle-cell-flag="$ctrl.puzzle.toggleCellFlag(cell)"
-       on-toggle-drag-state="$ctrl.puzzle.applyStateOfDraggedCell(draggedCell, cell)"
-       on-drag-end="$ctrl.puzzle.checkIfPuzzleIsSolved()"></board>
+       toggle-cell-fill-action="$ctrl.puzzle.toggleCellFill(cell)"
+       toggle-cell-flag-action="$ctrl.puzzle.toggleCellFlag(cell)"
+       toggle-using-dragged-cell-action="$ctrl.puzzle.applyStateOfDraggedCell(draggedCell, cell)"
+       drag-end-action="$ctrl.puzzle.checkIfPuzzleIsSolved()"></board>
 
 <h1 ng-show="$ctrl.puzzle.completed">Complete</h1>
 

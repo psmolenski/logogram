@@ -9,10 +9,10 @@ import CellDragHandler from "../../domain/cell-drag-handler";
 
 class BoardComponentController {
   private ngModel: INgModelController;
-  private onToggleCellFill : Function;
-  private onToggleCellFlag : Function;
-  private onToggleDragState : Function;
-  private onDragEnd : Function;
+  private toggleCellFillAction : Function;
+  private toggleCellFlagAction : Function;
+  private toggleUsingDraggedCellAction : Function;
+  private dragEndAction : Function;
 
   private cellComponents : CellComponentController[] = [];
   private dragHandler : CellDragHandler | null = null;
@@ -30,15 +30,15 @@ class BoardComponentController {
   }
 
   toggleCellFill(cell: Cell) {
-    this.onToggleCellFill({cell});
+    this.toggleCellFillAction({cell});
   }
 
   toggleCellFlag(cell: Cell) {
-    this.onToggleCellFlag({cell});
+    this.toggleCellFlagAction({cell});
   }
 
   toggleDragState(draggedCell : Cell, cell: Cell) {
-    this.onToggleDragState({draggedCell, cell});
+    this.toggleUsingDraggedCellAction({draggedCell, cell});
   }
 
   registerCellComponent(cellComponent: CellComponentController) {
@@ -72,7 +72,7 @@ class BoardComponentController {
 
   dragEnd() {
     this.dragHandler = null;
-    this.onDragEnd();
+    this.dragEndAction();
   }
 
   getCellAtPosition(x: number, y: number) : Cell | null {
@@ -97,10 +97,10 @@ export default {
   bindings: {
     groupsInRows: '<',
     groupsInColumns: '<',
-    onToggleCellFill: '&',
-    onToggleCellFlag: '&',
-    onToggleDragState: '&',
-    onDragEnd: '&'
+    toggleCellFillAction: '&',
+    toggleCellFlagAction: '&',
+    toggleUsingDraggedCellAction: '&',
+    dragEndAction: '&'
   },
   controller: BoardComponentController
 };
