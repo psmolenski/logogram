@@ -3,13 +3,13 @@
         <tr>
             <td></td>
             <th ng-repeat="groupsInColumn in ::$ctrl.groupsInColumns">
-                <div ng-repeat="group in ::groupsInColumn">{{group.size}}</div>
+                <div ng-repeat="group in ::groupsInColumn" class="lgg-board__group">{{group.size}}</div>
             </th>
         </tr>
 
         <tr ng-repeat="row in ::$ctrl.cellsInRows">
             <th>
-                <span ng-repeat="group in ::$ctrl.groupsInRows[$index]">
+                <span ng-repeat="group in ::$ctrl.groupsInRows[$index]" class="lgg-board__group">
                     {{group.size}}
                 </span>
             </th>
