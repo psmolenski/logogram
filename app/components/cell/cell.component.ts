@@ -59,6 +59,17 @@ class CellComponentController {
         } else if ($event.button === 1) {
           this.doSecondaryAction();
         }
+
+        this.dragStartAction({cell : this.cell});
+      });
+    });
+
+    this.$element.on('mousemove', ($event) => {
+      this.$scope.$applyAsync(() => {
+        this.dragMoveAction({
+          x: Math.floor($event.clientX),
+          y: Math.floor($event.clientY)
+        });
       });
     });
 
