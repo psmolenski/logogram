@@ -26,10 +26,10 @@ class Puzzle {
   }
 
   toggleCellFlag(cell: Cell) {
-    if (cell.isBlank()) {
-      cell.flag();
-    } else if (cell.isFlagged()) {
+    if (cell.isFlagged()) {
       cell.blank();
+    } else {
+      cell.flag();
     }
   }
 
