@@ -37,7 +37,6 @@
   },
   "dependencies": {
     "angular": "^1.6.8",
-    "immutable": "^3.8.2",
     "lodash": "^4.17.4"
   },
   "jest": {
