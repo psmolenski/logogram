@@ -1,8 +1,9 @@
 import tpl from './puzzle.component.html';
 import Board from "../../domain/board";
 import Puzzle from "../../domain/puzzle";
+import {IOnInit} from "angular";
 
-class PuzzleComponentController {
+class PuzzleComponentController implements IOnInit{
   pattern: number[][];
   puzzle: Puzzle;
 

@@ -1,10 +1,10 @@
 import tpl from './cell.component.html';
 import "./cell.component.less";
 import Cell from "../../domain/cell";
-import {INgModelController, IScope} from "angular";
+import {INgModelController, IOnInit, IPostLink, IScope} from "angular";
 import {BoardComponentController} from "../board/board.component";
 
-class CellComponentController {
+class CellComponentController implements IOnInit, IPostLink{
   private ngModel: INgModelController;
   private boardController: BoardComponentController;
   private toggleFillAction: Function;
