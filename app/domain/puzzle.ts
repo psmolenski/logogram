@@ -10,8 +10,6 @@ class Puzzle {
   public readonly groupsInRows: Group[][];
   public readonly groupsInColumns: Group[][];
 
-  public draggedCell: Cell | null = null;
-
   constructor(pattern: number[][]){
     this.board = new Board(pattern);
 
@@ -24,11 +22,7 @@ class Puzzle {
       cell.fill();
     } else if (cell.isFilled()) {
       cell.blank();
-    } else {
-      return;
     }
-
-    this.draggedCell = cell;
   }
 
   toggleCellFlag(cell: Cell) {
@@ -36,57 +30,23 @@ class Puzzle {
       cell.flag();
     } else if (cell.isFlagged()) {
       cell.blank();
-    } else {
-      return;
     }
-
-    this.draggedCell = cell;
   }
 
-  isDraggingCell() : boolean{
-    return this.draggedCell !== null;
-  }
-
-  applyStateOfDraggedCell(cell: Cell) {
-    if (this.draggedCell === null) {
-      return;
-    }
-
-    if (this.draggedCell.isFilled() && cell.isBlank()) {
+  applyStateOfDraggedCell(draggedCell : Cell, cell: Cell) {
+    if (draggedCell.isFilled() && cell.isBlank()) {
       cell.fill();
-    } else if (this.draggedCell.isBlank() && cell.isFilled()) {
+    } else if (draggedCell.isBlank() && cell.isFilled()) {
       cell.blank();
-    } else if (this.draggedCell.isFlagged() && cell.isBlank()) {
+    } else if (draggedCell.isFlagged() && cell.isBlank()) {
       cell.flag();
-    } else if (this.draggedCell.isBlank() && cell.isFlagged()) {
+    } else if (draggedCell.isBlank() && cell.isFlagged()) {
       cell.blank();
     }
   }
 
-  clearDraggedCell() {
-    this.draggedCell = null;
-
+  checkIfPuzzleIsSolved() {
     this.completed = this.board.hasAllCellsInDesiredState();
-  }
-
-  isCellAcceptingDrag(cell: Cell) {
-    return this.isDraggingCell() && (this.isInSameRowAsDraggedCell(cell) || this.isInSameColumnAsDraggedCell(cell));
-  }
-
-  isInSameRowAsDraggedCell(cell: Cell) {
-    if (this.draggedCell === null) {
-      return false;
-    }
-
-    return cell.row === this.draggedCell.row;
-  }
-
-  isInSameColumnAsDraggedCell(cell: Cell) {
-    if (this.draggedCell === null) {
-      return false;
-    }
-
-    return cell.column === this.draggedCell.column;
   }
 
   private createGroups(arr : number[]): Group[] {

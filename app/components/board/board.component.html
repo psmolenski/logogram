@@ -17,10 +17,9 @@
                 <cell ng-model="cell"
                       do-primary-action="$ctrl.toggleCellFill(cell)"
                       do-secondary-action="$ctrl.toggleCellFlag(cell)"
-                      accept-drag="$ctrl.isCellAcceptingDrag({cell: cell})"
-                      do-drag-action="$ctrl.toggleDragState(cell)"
-                      do-drag-end-action="$ctrl.onToggleDragEnd({cell: cell})"
-                ></cell>
+                      drag-start-action="$ctrl.dragStart(cell)"
+                      drag-move-action="$ctrl.dragMove(x, y)"
+                      drag-end-action="$ctrl.dragEnd()"></cell>
             </td>
         </tr>
     </tbody>

@@ -3,9 +3,8 @@
        groups-in-columns="$ctrl.puzzle.groupsInColumns"
        on-toggle-cell-fill="$ctrl.puzzle.toggleCellFill(cell)"
        on-toggle-cell-flag="$ctrl.puzzle.toggleCellFlag(cell)"
-       is-cell-accepting-drag="$ctrl.puzzle.isCellAcceptingDrag(cell)"
-       on-toggle-drag-state="$ctrl.puzzle.applyStateOfDraggedCell(cell)"
-       on-toggle-drag-end="$ctrl.puzzle.clearDraggedCell()"></board>
+       on-toggle-drag-state="$ctrl.puzzle.applyStateOfDraggedCell(draggedCell, cell)"
+       on-drag-end="$ctrl.puzzle.checkIfPuzzleIsSolved()"></board>
 
 <h1 ng-show="$ctrl.puzzle.completed">Complete</h1>
 
