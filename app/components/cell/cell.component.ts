@@ -7,8 +7,8 @@ import {BoardComponentController} from "../board/board.component";
 class CellComponentController {
   private ngModel: INgModelController;
   private boardController: BoardComponentController;
-  private doPrimaryAction: Function;
-  private doSecondaryAction: Function;
+  private toggleFillAction: Function;
+  private toggleFlagAction: Function;
   private dragMoveAction: Function;
   private dragEndAction: Function;
   private dragStartAction: Function;
@@ -22,7 +22,7 @@ class CellComponentController {
   $postLink() {
     this.$element.on('touchstart', ($event) => {
       this.$scope.$applyAsync(() => {
-        this.doPrimaryAction();
+        this.toggleFillAction();
         this.dragStartAction({cell : this.cell});
       });
 
@@ -55,9 +55,9 @@ class CellComponentController {
     this.$element.on('mousedown', ($event) => {
       this.$scope.$applyAsync(() => {
         if ($event.button === 0) {
-          this.doPrimaryAction()
+          this.toggleFillAction()
         } else if ($event.button === 1) {
-          this.doSecondaryAction();
+          this.toggleFlagAction();
         }
 
         this.dragStartAction({cell : this.cell});
@@ -109,9 +109,8 @@ export {CellComponentController};
 export default {
   template: tpl,
   bindings: {
-    acceptDrag: '<',
-    doPrimaryAction: '&',
-    doSecondaryAction: '&',
+    toggleFillAction: '&',
+    toggleFlagAction: '&',
     dragMoveAction: '&',
     dragStartAction: '&',
     dragEndAction: '&'

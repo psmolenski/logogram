@@ -15,8 +15,8 @@
             </th>
             <td ng-repeat="cell in ::row">
                 <cell ng-model="cell"
-                      do-primary-action="$ctrl.toggleCellFill(cell)"
-                      do-secondary-action="$ctrl.toggleCellFlag(cell)"
+                      toggle-fill-action="$ctrl.toggleCellFill(cell)"
+                      toggle-flag-action="$ctrl.toggleCellFlag(cell)"
                       drag-start-action="$ctrl.dragStart(cell)"
                       drag-move-action="$ctrl.dragMove(x, y)"
                       drag-end-action="$ctrl.dragEnd()"></cell>
