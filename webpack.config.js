@@ -34,7 +34,7 @@ module.exports = {
         }
       },
       {
-        test: /component\.html$/,
+        test: /(component|view)\.html$/,
         loader: "html-loader?exportAsEs6Default"
       },
       {

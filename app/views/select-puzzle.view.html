@@ -1,0 +1,6 @@
+Select Puzzle
+<ul>
+    <li ng-repeat="pattern in $ctrl.patterns">
+        <a ui-sref="puzzle({pattern: pattern})">Puzzle #{{$index + 1}}</a>
+    </li>
+</ul>
