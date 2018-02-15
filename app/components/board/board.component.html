@@ -21,6 +21,18 @@
                       drag-move-action="$ctrl.dragMove(x, y)"
                       drag-end-action="$ctrl.dragEnd()"></cell>
             </td>
+            <th>
+                <span ng-repeat="group in ::$ctrl.groupsInRows[$index]" class="lgg-board__group lgg-board__group--phantom">
+                    {{group.size}}
+                </span>
+            </th>
+        </tr>
+
+        <tr>
+            <td></td>
+            <th ng-repeat="groupsInColumn in ::$ctrl.groupsInColumns">
+                <div ng-repeat="group in ::groupsInColumn" class="lgg-board__group lgg-board__group--phantom">{{group.size}}</div>
+            </th>
         </tr>
     </tbody>
 </table>
