@@ -19,3 +19,41 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.list {
+  &--unstyled {
+    list-style: none;
+  }
+
+  &--horizontal {
+    li {
+      display: inline-block;
+    }
+  }
+}
+
+.btn {
+  display: inline-block;
+
+  width: 20px;
+  height: 20px;
+
+  background: white;
+
+  cursor: pointer;
+
+  &-back {
+    background: url('/assets/icons/back.svg') no-repeat center;
+  }
+
+  &-puzzle {
+    width: 1.5em;
+    height: auto;
+
+    font-size: 2em;
+    line-height: 1.5em;
+    margin: 0.1em;
+
+    border: 1px solid #999;
+  }
+}

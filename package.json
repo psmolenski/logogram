@@ -11,13 +11,13 @@
     "protractor": "protractor e2e/protractor.config.js",
     "server": "http-server dist -c-1 ",
     "test:unit": "jest",
-    "test:unit:watch": "jest --watch",
-    "deploy": "firebase deploy"
+    "test:unit:watch": "jest --watch"
   },
   "author": "Paweł Smoleński",
   "license": "ISC",
   "devDependencies": {
     "@types/angular": "^1.6.40",
+    "@types/bluebird": "^3.5.20",
     "@types/jest": "^22.0.1",
     "@types/lodash": "^4.14.92",
     "awesome-typescript-loader": "^3.4.1",
@@ -39,7 +39,9 @@
   "dependencies": {
     "@uirouter/angularjs": "^1.0.15",
     "angular": "^1.6.8",
-    "lodash": "^4.17.4"
+    "bluebird": "^3.5.1",
+    "lodash": "^4.17.4",
+    "sweetalert": "^2.1.0"
   },
   "jest": {
     "transform": {

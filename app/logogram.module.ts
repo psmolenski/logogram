@@ -5,10 +5,12 @@ import cellComponent from './components/cell/cell.component';
 import logogramComponent from './logogram.component';
 import puzzleComponent from './components/puzzle/puzzle.component';
 import routing from "./routing";
+import AletService from "./services/alert.service";
 
 export default angular.module('logogram', ['ui.router'])
   .component('logogram', logogramComponent)
   .component('puzzle', puzzleComponent)
   .component('board', boardComponent)
   .component('cell', cellComponent)
+  .service('AlertService', AletService)
   .config(routing);
