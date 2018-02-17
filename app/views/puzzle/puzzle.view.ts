@@ -12,18 +12,39 @@ class PuzzleViewController implements IOnInit {
         this.pattern = this.$state.params.pattern;
     }
 
-    onPuzzleComplete() : void {
+    onPuzzleComplete(): void {
         this.AlertService.success('Congratulations').then(() => {
             this.$state.go('select-puzzle');
         });
     }
 
-    goBack(): void {
-        this.AlertService.confirmation("Do you want to go back?")
-            .then(() => {
-                this.$state.go('select-puzzle');
-            })
-
+    showMenu(): void {
+        this.AlertService.modal({
+            className: 'menu-modal',
+            buttons: {
+                selectPuzzle: {
+                    text: 'Select Puzzle',
+                    className: 'btn--menu-item'
+                },
+                restart: {
+                    text: 'Restart',
+                    className: 'btn--menu-item'
+                },
+                close: {
+                    text: 'Close',
+                    className: 'btn--menu-item'
+                }
+            }
+        }).then(selectedItem => {
+            switch(selectedItem) {
+                case 'selectPuzzle':
+                    this.$state.go('select-puzzle');
+                    break;
+                case 'restart':
+                    this.$state.reload();
+                    break;
+            }
+        });
     }
 }
 

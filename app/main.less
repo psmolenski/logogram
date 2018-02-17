@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Comfortaa:400,700&subset=latin-ext');
 
 html {
-  font-family: 'Comfortaa', cursive;
+  font-family: 'Comfortaa', sans-serif;
 }
 
 * {
@@ -24,6 +24,8 @@ body {
 }
 
 .list {
+  padding: 0;
+
   &--unstyled {
     list-style: none;
   }
@@ -45,8 +47,32 @@ body {
 
   cursor: pointer;
 
-  &-back {
-    background: url('/assets/icons/back.svg') no-repeat center;
+  &-menu {
+    background: url('../assets/icons/menu.svg') no-repeat center;
+    
+    width: 60px;
+    height: 60px;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    border: none;
+  }
+
+  &--menu-item {
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 25px;
+    background: none;
+    color: black;
+    outline: none;
+    border: none;
+    margin: 8px;
+    box-shadow: none;
+
+    &:active, &:focus {
+      box-shadow: none;
+    }
   }
 
   &-puzzle {
@@ -59,4 +85,26 @@ body {
 
     border: 1px solid #999;
   }
+}
+
+.layout {
+  &--vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.menu-modal {
+  .swal-footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.swal-footer {
+  text-align: center;
 }

@@ -1,7 +1,13 @@
 import "sweetalert";
 import {Promise} from "bluebird";
+import { SwalParams } from "sweetalert/typings/core";
 
 class AletService {
+    
+    modal(...args: SwalParams) {
+        return sweetAlert(...args);
+    }
+
     success(title: string) {
         return sweetAlert({
             title: title,
@@ -32,4 +38,5 @@ class AletService {
     }
 }
 
+export {AletService};
 export default AletService;
