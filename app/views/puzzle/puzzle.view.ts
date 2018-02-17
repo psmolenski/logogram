@@ -30,8 +30,8 @@ class PuzzleViewController implements IOnInit {
                     text: 'Restart',
                     className: 'btn--menu-item'
                 },
-                close: {
-                    text: 'Close',
+                continue: {
+                    text: 'Continue',
                     className: 'btn--menu-item'
                 }
             }
