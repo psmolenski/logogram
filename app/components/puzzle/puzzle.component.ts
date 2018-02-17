@@ -4,9 +4,9 @@ import Puzzle from "../../domain/puzzle";
 import {IOnInit, IScope} from "angular";
 
 class PuzzleComponentController implements IOnInit{
-  pattern!: number[][];
-  completeAction!: Function;
-  puzzle!: Puzzle;
+  pattern: number[][];
+  completeAction: Function;
+  puzzle: Puzzle;
 
   constructor(readonly $scope: IScope) {}
 
