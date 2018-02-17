@@ -1,6 +1,6 @@
 <div class="layout layout--vertical">
     <h2>Select a Puzzle</h2>
-    <ul class="list list--unstyled list--horizontal">
+    <ul class="level-list">
         <li ng-repeat="pattern in $ctrl.patterns">
             <button ui-sref="puzzle({pattern: pattern})" class="btn btn-puzzle">{{$index + 1}}</button>
         </li>
