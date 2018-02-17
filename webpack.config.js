@@ -48,8 +48,13 @@ module.exports = {
         }]
       },
       {
-        test: /\.png$/,
-        use: 'file-loader'
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            outputPath: 'assets/'
+          }
+        }]
       }
     ]
   },
