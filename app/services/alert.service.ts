@@ -2,6 +2,13 @@ import "sweetalert";
 import {Promise} from "bluebird";
 
 class AletService {
+    success(title: string) {
+        return sweetAlert({
+            title: title,
+            icon: 'success'
+        });
+    }
+
     confirmation(title: string) {
         return sweetAlert({
             title: title,

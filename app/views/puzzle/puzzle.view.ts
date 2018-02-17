@@ -12,6 +12,12 @@ class PuzzleViewController implements IOnInit {
         this.pattern = this.$state.params.pattern;
     }
 
+    onPuzzleComplete() : void {
+        this.AlertService.success('Congratulations').then(() => {
+            this.$state.go('select-puzzle');
+        });
+    }
+
     goBack(): void {
         this.AlertService.confirmation("Do you want to go back?")
             .then(() => {

@@ -1,14 +1,23 @@
 import tpl from './puzzle.component.html';
 import Board from "../../domain/board";
 import Puzzle from "../../domain/puzzle";
-import {IOnInit} from "angular";
+import {IOnInit, IScope} from "angular";
 
 class PuzzleComponentController implements IOnInit{
-  pattern: number[][];
-  puzzle: Puzzle;
+  pattern!: number[][];
+  completeAction!: Function;
+  puzzle!: Puzzle;
+
+  constructor(readonly $scope: IScope) {}
 
   $onInit() {
     this.puzzle = new Puzzle(this.pattern);
+
+    this.$scope.$watch(() => this.puzzle.completed, (value) => {
+      if (value === true) {
+        this.completeAction();
+      }
+    });
   }
 
   get board(): Board {
@@ -19,7 +28,8 @@ class PuzzleComponentController implements IOnInit{
 export default {
   controller: PuzzleComponentController,
   bindings: {
-    pattern: '<'
+    pattern: '<',
+    completeAction: '&'
   },
   template: tpl
 }
