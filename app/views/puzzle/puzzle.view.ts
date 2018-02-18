@@ -2,19 +2,21 @@ import { IOnInit } from "angular";
 import { StateService } from "@uirouter/core";
 import AlertService from '../../services/alert.service'
 import Grid from "../../domain/grid";
+import UserStorage from "../../services/user-storage.service";
+import GridsRepository from "../../services/grids-repository.service";
 
 class PuzzleViewController implements IOnInit {
     grid: Grid;
 
-
-    constructor(readonly $state: StateService, readonly AlertService: AlertService) { }
+    constructor(readonly $state: StateService, readonly AlertService: AlertService, readonly GridsRepositoryService : GridsRepository) { }
 
     $onInit(): void {
         this.grid = this.$state.params.grid;
     }
 
     onPuzzleComplete(): void {
-        this.grid.completed = true;
+        this.GridsRepositoryService.markGridAsCompleted(this.grid);
+        
         this.AlertService.success('Congratulations').then(() => {
             this.$state.go('select-puzzle');
         });

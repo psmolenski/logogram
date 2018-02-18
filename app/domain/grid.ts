@@ -1,18 +1,20 @@
 interface Grid {
- readonly pattern : number[][];
- readonly width : number;
- readonly height : number;
- completed : boolean;
+    readonly id: number;
+    readonly pattern: number[][];
+    readonly width: number;
+    readonly height: number;
+    completed: boolean;
 }
 
-function createGridFromPattern(pattern: number[][]) : Grid {
+function createGridFromPattern(id : number, pattern: number[][], completed = false): Grid {
     return {
+        id: id,
         pattern: pattern,
         width: pattern[0].length,
         height: pattern.length,
-        completed: false
+        completed: completed
     }
 }
 
-export {createGridFromPattern};
+export { createGridFromPattern };
 export default Grid;

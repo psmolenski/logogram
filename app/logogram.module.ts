@@ -7,6 +7,7 @@ import puzzleComponent from './components/puzzle/puzzle.component';
 import routing from "./routing";
 import AletService from "./services/alert.service";
 import GridsRepositoryService from "./services/grids-repository.service";
+import UserStorageService from "./services/user-storage.service";
 
 export default angular.module('logogram', ['ui.router'])
   .component('logogram', logogramComponent)
@@ -15,4 +16,5 @@ export default angular.module('logogram', ['ui.router'])
   .component('cell', cellComponent)
   .service('AlertService', AletService)
   .service('GridsRepositoryService', GridsRepositoryService)
+  .service('UserStorageService', UserStorageService)
   .config(routing);
