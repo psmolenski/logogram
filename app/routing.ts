@@ -16,7 +16,7 @@ export default function routing($stateProvider : StateProvider, $urlRouterProvid
         controller: PuzzleViewController,
         controllerAs: '$ctrl',
         params: {
-            pattern: {
+            grid: {
                 raw: true
             }
         }

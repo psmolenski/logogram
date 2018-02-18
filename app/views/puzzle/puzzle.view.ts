@@ -3,13 +3,13 @@ import { StateService } from "@uirouter/core";
 import AlertService from '../../services/alert.service'
 
 class PuzzleViewController implements IOnInit {
-    pattern: number[][] | null = null;
+    grid: number[][] | null = null;
 
 
     constructor(readonly $state: StateService, readonly AlertService: AlertService) { }
 
     $onInit(): void {
-        this.pattern = this.$state.params.pattern;
+        this.grid = this.$state.params.grid;
     }
 
     onPuzzleComplete(): void {
