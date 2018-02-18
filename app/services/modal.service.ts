@@ -2,19 +2,35 @@ import "sweetalert";
 import {Promise} from "bluebird";
 import { SwalParams } from "sweetalert/typings/core";
 import { ButtonList } from "sweetalert/typings/modules/options/buttons";
+import { IScope, IQService } from "angular";
 
 class ModalService {
+
+    constructor(readonly $q: IQService){};
+
+    modal(...args : SwalParams) {
+        const deferred = this.$q.defer();
+
+        sweetAlert(...args).then(result => {
+            deferred.resolve(result);
+        }).catch(reason => {
+            deferred.reject(reason);
+        })
+
+        return deferred.promise;
+    }
     
     success(title: string) {
-        return sweetAlert({
+        return this.modal({
             title: title,
             icon: 'success'
         });
     }
 
-    confirmation(title: string) {
-        return sweetAlert({
+    confirmation(title: string, text: string) {
+        return this.modal({
             title: title,
+            text: text,
             buttons: {
                 yes: {
                     text: 'Yes',
@@ -27,15 +43,15 @@ class ModalService {
             }
         }).then(confirmation => {
             if (confirmation === true) {
-                return Promise.resolve(confirmation);
+                return this.$q.resolve()
             } 
 
-            return Promise.reject(confirmation);
+            return this.$q.reject();
         });
     }
 
     menu(menuItems: MenuItemsList) {
-        return sweetAlert({
+        return this.modal({
             className: 'menu-modal',
             buttons: Object.keys(menuItems).reduce((buttons, itemName) => {
                 const menuItem = menuItems[itemName];
@@ -47,7 +63,7 @@ class ModalService {
             }, <ButtonList> {})
         })
             .then(selectedItemName => {
-                menuItems[selectedItemName].action();
+                menuItems[<string> selectedItemName].action();
             });
     }
 }

@@ -39,6 +39,12 @@ class GridsRepository {
         this.completedGridsIds.push(grid.id);
         this.UserStorageService.setItem('completedGridsIds', this.completedGridsIds);
     }
+
+    resetCompletedGrids() {
+        this.grids.forEach(grid => grid.completed = false);
+        this.completedGridsIds.length = 0;
+        this.UserStorageService.setItem('completedGridsIds', this.completedGridsIds); 
+    }
 }
 
 export default GridsRepository;
