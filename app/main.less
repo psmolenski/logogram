@@ -96,6 +96,27 @@ body {
     margin: 0.1em;
 
     border: 1px solid #999;
+    position: relative;
+
+    &--completed {
+      border-width: 2px;
+      border-color: rgb(98, 187, 70);
+      &:after {
+        content: '';
+        width: 20px;
+        height: 20px;
+        background: url('../assets/icons/check-circle.svg') no-repeat center;
+        background-color: white;
+        border: 2px solid white;
+        border-radius: 50%;
+        background-size: contain;
+        display: block;
+
+        position: absolute;
+        bottom: -6px;
+        right: -6px;
+      }
+    }
   }
 }
 

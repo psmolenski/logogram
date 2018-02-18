@@ -2,7 +2,7 @@
     <h2>Select a Puzzle</h2>
     <ul class="level-list">
         <li ng-repeat="grid in $ctrl.grids">
-            <button ui-sref="puzzle({grid: grid})" class="btn btn-puzzle">{{$index + 1}}</button>
+            <button ui-sref="puzzle({grid: grid})" class="btn btn-puzzle" ng-class="{'btn-puzzle--completed' : grid.completed}">{{$index + 1}}</button>
         </li>
     </ul>
 </div>

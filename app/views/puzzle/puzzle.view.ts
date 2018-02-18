@@ -1,9 +1,10 @@
 import { IOnInit } from "angular";
 import { StateService } from "@uirouter/core";
 import AlertService from '../../services/alert.service'
+import Grid from "../../domain/grid";
 
 class PuzzleViewController implements IOnInit {
-    grid: number[][] | null = null;
+    grid: Grid;
 
 
     constructor(readonly $state: StateService, readonly AlertService: AlertService) { }
@@ -13,6 +14,7 @@ class PuzzleViewController implements IOnInit {
     }
 
     onPuzzleComplete(): void {
+        this.grid.completed = true;
         this.AlertService.success('Congratulations').then(() => {
             this.$state.go('select-puzzle');
         });
