@@ -2,9 +2,13 @@
 
 <div class="layout layout--vertical">
     <h2>Select a Puzzle</h2>
-    <ul class="level-list">
-        <li ng-repeat="grid in $ctrl.grids">
-            <button ui-sref="puzzle({grid: grid})" class="btn btn-puzzle" ng-class="{'btn-puzzle--completed' : grid.completed}">{{$index + 1}}</button>
-        </li>
-    </ul>
+    <div class="level-group">
+        <h3 class="level-group__header">5x5 <span class="level-group__subheader">({{$ctrl.numberOfCompletedGrids}}/{{$ctrl.numberOfGrids}})</span></h3>
+        <ul class="level-list">
+            <li ng-repeat="grid in $ctrl.grids">
+                <button ui-sref="puzzle({grid: grid})" class="btn btn-puzzle" ng-class="{'btn-puzzle--completed' : grid.completed}">{{$index + 1}}</button>
+            </li>
+        </ul>
+    </div>
+    
 </div>
