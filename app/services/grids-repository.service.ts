@@ -1,49 +1,50 @@
-import Grid, { createGridFromPattern } from "../domain/grid";
+import Grid, { createGridFromPattern, GridGroup, GridProgress } from "../domain/grid";
 import UserStorage from "./user-storage.service";
 import * as _ from 'lodash';
-
-const patterns = [
-    [[1,1,0,1,1],[1,1,0,1,1],[0,0,0,0,0],[1,0,0,0,1],[0,1,1,1,0]],
-    [[0,1,1,0,0],[0,0,1,0,0],[1,1,1,1,1],[1,0,1,0,1],[1,1,1,0,0]],
-    [[1,0,1,0,1],[1,1,1,1,1],[0,1,1,1,0],[0,1,0,1,0],[0,1,1,1,0]],
-    [[0,0,1,0,0],[0,1,1,1,0],[1,1,1,1,1],[0,0,1,0,0],[0,1,1,1,0]],
-    [[0,1,1,1,0],[0,1,0,1,0],[1,1,1,1,1],[1,0,0,0,1],[0,1,1,1,0]],
-    [[0,0,0,1,1],[0,0,1,1,1],[0,1,1,0,1],[1,1,0,0,1],[1,1,1,1,1]],
-    [[1,1,1,1,1],[1,0,1,0,1],[1,1,1,0,1],[1,0,1,0,1],[1,1,1,1,1]],
-    [[1,0,1,0,1],[0,1,1,1,0],[1,1,0,1,1],[0,1,1,1,0],[1,0,1,0,1]],
-    [[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0],[0,1,0,1,0],[1,1,1,1,1]],
-    [[0,0,0,1,0],[1,0,1,1,1],[0,1,1,1,0],[0,1,0,1,0],[0,1,0,1,0]],
-    [[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1]],
-    [[0,1,0,1,0],[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1],[1,0,0,0,1]],
-    [[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1],[0,1,0,1,0]],
-    [[1,0,0,1,1],[1,1,1,1,0],[0,1,0,1,0],[0,1,1,1,1],[1,1,0,0,1]],
-    [[1,0,1,0,1],[1,0,1,0,1],[1,0,1,0,1],[0,1,1,1,0],[0,0,1,0,0]],
-    [[0,1,0,1,0],[1,1,1,1,1],[0,1,0,1,0],[1,1,1,1,1],[0,1,0,1,0]],
-    [[1,1,1,1,1],[0,0,0,1,0],[0,0,1,0,0],[0,1,0,0,0],[1,1,1,1,1]],
-    [[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1],[1,0,0,0,0],[1,0,0,0,0]],
-    [[0,1,1,1,0],[1,1,0,1,1],[1,0,0,0,1],[1,1,0,1,1],[0,1,1,1,0]],
-    [[1,1,1,1,1],[1,0,0,0,0],[1,1,1,1,1],[0,0,0,0,1],[1,1,1,1,1]],
-];
+import gridInGroups, { GridPatternGroup, GridPattern } from '../data/grids';
 
 class GridsRepository {
-    readonly completedGridsIds: number[];
-    readonly grids : Grid[];
+    readonly gridsInGroups: GridGroup[];
 
-    constructor(readonly UserStorageService : UserStorage) {
-        this.completedGridsIds = this.UserStorageService.getItem('completedGridsIds') || [];
-        this.grids = patterns.map((pattern, index) => createGridFromPattern(index, pattern, _.includes(this.completedGridsIds, index)));
+    constructor(readonly UserStorageService: UserStorage) {
+        const gridProgressesInGroups: GridProgress[][] = this.UserStorageService.getItem('gridProgressesInGroups') || [];
+        
+        this.gridsInGroups = _.zip<GridPatternGroup | GridProgress[]>(gridInGroups, gridProgressesInGroups)
+            .map((pair) => {
+                const gridGroup = <GridPatternGroup> pair[0];
+                const gridProgressGroup = <GridProgress[]> pair[1] || [];
+
+                return {
+                    name: gridGroup.name,
+                    grids: _.zip<GridPattern|GridProgress>(gridGroup.patterns, gridProgressGroup).map(pair => {
+                        const pattern = <GridPattern> pair[0];
+                        const gridProgress = <GridProgress> pair[1];
+
+                        return createGridFromPattern(pattern, gridProgress);
+                    })
+                };
+            });
+
+        this.saveProgress();
     }
 
-    markGridAsCompleted(grid : Grid) {
-        grid.completed = true;
-        this.completedGridsIds.push(grid.id);
-        this.UserStorageService.setItem('completedGridsIds', this.completedGridsIds);
+    getNumberOfCompletedGridsInGroup(gridGroup: GridGroup) {
+        return gridGroup.grids.reduce((sum, grid) => grid.progress.completed ? sum + 1 : sum, 0);
+    }
+
+    markGridAsCompleted(grid: Grid) {
+        grid.progress.completed = true;
+        this.saveProgress();
+    }
+
+    saveProgress() {
+        const gridProgressesInGroups = this.gridsInGroups.map(gridGroup => gridGroup.grids.map(grid => grid.progress));
+        this.UserStorageService.setItem('gridProgressesInGroups', gridProgressesInGroups);
     }
 
     resetCompletedGrids() {
-        this.grids.forEach(grid => grid.completed = false);
-        this.completedGridsIds.length = 0;
-        this.UserStorageService.setItem('completedGridsIds', this.completedGridsIds); 
+        this.gridsInGroups.forEach(gridGroup => gridGroup.grids.forEach(grid => grid.progress.completed = false));
+        this.saveProgress();
     }
 }
 

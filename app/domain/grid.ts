@@ -1,18 +1,25 @@
-interface Grid {
-    readonly id: number;
+export interface Grid {
     readonly pattern: number[][];
     readonly width: number;
     readonly height: number;
+    readonly progress: GridProgress;
+}
+
+export interface GridGroup {
+    name: string;
+    grids: Grid[];
+}
+
+export interface GridProgress {
     completed: boolean;
 }
 
-function createGridFromPattern(id : number, pattern: number[][], completed = false): Grid {
+function createGridFromPattern(pattern: number[][], gridProgress: GridProgress): Grid {
     return {
-        id: id,
         pattern: pattern,
         width: pattern[0].length,
         height: pattern.length,
-        completed: completed
+        progress: gridProgress || {completed: false}
     }
 }
 

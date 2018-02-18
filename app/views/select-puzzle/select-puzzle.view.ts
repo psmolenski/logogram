@@ -1,6 +1,7 @@
 import GridsRepository from "../../services/grids-repository.service";
 import { MenuItemsList, ModalService } from "../../services/modal.service";
 import './select-puzzle.view.less';
+import { GridGroup } from "../../domain/grid";
 
 class SelectPuzzleViewController {
     readonly menuItems: MenuItemsList = {
@@ -16,16 +17,8 @@ class SelectPuzzleViewController {
 
     constructor(readonly GridsRepositoryService: GridsRepository, readonly ModalService : ModalService){}    
 
-    get grids() {
-        return this.GridsRepositoryService.grids;
-    }
-
-    get numberOfGrids() {
-        return this.GridsRepositoryService.grids.length;
-    }
-
-    get numberOfCompletedGrids() {
-        return this.GridsRepositoryService.completedGridsIds.length;
+    get gridsInGroups() {
+        return this.GridsRepositoryService.gridsInGroups;
     }
 
     resetCompletedGrids() {
@@ -35,6 +28,10 @@ class SelectPuzzleViewController {
             return this.GridsRepositoryService.resetCompletedGrids();
         })
         .catch(() => {});
+    }
+
+    getNumberOfCompletedGridsInGroup(gridGroup: GridGroup) {
+        return this.GridsRepositoryService.getNumberOfCompletedGridsInGroup(gridGroup);
     }
 }
 
