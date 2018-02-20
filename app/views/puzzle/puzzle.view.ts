@@ -7,6 +7,7 @@ import GridsRepository from "../../services/grids-repository.service";
 
 class PuzzleViewController implements IOnInit {
     grid: Grid;
+    
     readonly menuItems: MenuItemsList = {
         selectPuzzle: {
             text: 'Select Puzzle',

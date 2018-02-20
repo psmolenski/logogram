@@ -20,7 +20,7 @@ class GridsRepository {
                         const pattern = <GridPattern> pair[0];
                         const gridProgress = <GridProgress> pair[1];
 
-                        return createGridFromPattern(pattern, gridProgress);
+                        return createGridFromPattern(gridGroup, pattern, gridProgress);
                     })
                 };
             });

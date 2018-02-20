@@ -9,6 +9,7 @@ import CellDragHandler from "../../domain/cell-drag-handler";
 
 class BoardComponentController {
   private ngModel: INgModelController;
+  private size: string;
   private toggleCellFillAction : Function;
   private toggleCellFlagAction : Function;
   private toggleUsingDraggedCellAction : Function;
@@ -95,6 +96,7 @@ export default {
     ngModel: 'ngModel'
   },
   bindings: {
+    size: '<',
     groupsInRows: '<',
     groupsInColumns: '<',
     toggleCellFillAction: '&',

@@ -5,6 +5,7 @@ import {IOnInit, IScope} from "angular";
 
 class PuzzleComponentController implements IOnInit{
   pattern: number[][];
+  size: string;
   completeAction: Function;
   puzzle: Puzzle;
 
@@ -29,6 +30,7 @@ export default {
   controller: PuzzleComponentController,
   bindings: {
     pattern: '<',
+    size: '<',
     completeAction: '&'
   },
   template: tpl

@@ -18,8 +18,37 @@
     }
   }
 
+  tbody {
+    th {
+      text-align: right;
+    }
+  }
+
   th {
     padding: 2px 3px;
+  }
+
+  &--small {
+    .lgg-board__cell {
+      width: 30px;
+      height: 30px;
+      border-radius: 3px;
+    }
+  }
+
+  &--medium {
+    .lgg-board__cell {
+      width: 23px;
+      height: 23px;
+      border-radius: 3px;
+    }
+
+    .lgg-board__group {
+  
+      &--phantom {
+        display: none;
+      }
+    }
   }
 }
 
