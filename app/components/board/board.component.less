@@ -2,7 +2,13 @@
   table-layout: fixed;
   border-spacing: 1px;
   font-size: 0.8em;
-  line-height: 1.4em;
+
+  &__column, &__row {
+    &--completed {
+      background: #72cbfd;
+      color: #fbfbfb;
+    }
+  }
 
   &__group {
     margin: 0 2px;
@@ -15,17 +21,20 @@
   thead {
     th {
       vertical-align: bottom;
+      padding-top: 5px;
+      line-height: 1.4em;
     }
   }
 
   tbody {
     th {
+      padding: 0 5px;
       text-align: right;
     }
   }
 
   th {
-    padding: 2px 3px;
+    border-radius: 5px;
   }
 
   &--small {

@@ -2,19 +2,19 @@
     <thead>
         <tr>
             <td></td>
-            <th ng-repeat="groupsInColumn in ::$ctrl.groupsInColumns">
+            <th ng-repeat="groupsInColumn in ::$ctrl.groupsInColumns" class="lgg-board__column" ng-class="{'lgg-board__column--completed' : $ctrl.isColumnCompleted($index)}">
                 <div ng-repeat="group in ::groupsInColumn" class="lgg-board__group">{{group.size}}</div>
             </th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="row in ::$ctrl.cellsInRows">
-            <th>
+            <th class="lgg-board__row" ng-class="{'lgg-board__row--completed' : row.completed}">
                 <span ng-repeat="group in ::$ctrl.groupsInRows[$index]" class="lgg-board__group">
                     {{group.size}}
                 </span>
             </th>
-            <td ng-repeat="cell in ::row">
+            <td ng-repeat="cell in ::row.cells">
                 <cell ng-model="cell"
                       toggle-fill-action="$ctrl.toggleCellFill(cell)"
                       toggle-flag-action="$ctrl.toggleCellFlag(cell)"
