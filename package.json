@@ -58,6 +58,11 @@
     "moduleNameMapper": {
       "\\.(html)$": "<rootDir>/__mocks__/htmlMock.ts",
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.ts"
-    }
+    },
+    "collectCoverageFrom": [
+      "app/**/*.ts"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": [ "lcov" ]
   }
 }
