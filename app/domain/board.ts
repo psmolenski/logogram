@@ -35,8 +35,8 @@ export default class Board {
     });
   }
 
-  hasAllCellsInDesiredState() {
-    return this.cellRows.every(row => row.completed);
+  hasAllDesiredCellGroups() {
+    return this.cellRows.every(row => row.completed) && this.cellColumns.every(column => column.completed);
   }
 
 }

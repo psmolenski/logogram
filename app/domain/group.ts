@@ -1,49 +1,58 @@
 import Cell, { CellState } from "./cell";
+import * as _ from 'lodash';
 
-class Group {
-  public readonly type: any;
+class CellGroup {
+  public readonly state: CellState;
   public readonly size: number;
 
-  constructor(type: any, size: number) {
-    this.type = type;
+  constructor(state: any, size: number) {
+    this.state = state;
     this.size = size;
+  }
+
+  isFilled() {
+    return this.state === CellState.FILLED;
   }
 }
 
 export class CellRow {
-  readonly desiredCellGroups: Group[];
+  readonly desiredCellGroups: CellGroup[];
+  cellGroups: CellGroup[];
 
   constructor(readonly cells: Cell[]){
-    this.desiredCellGroups = this.createGroups();
+    this.desiredCellGroups = this.createGroups([], this.cells, cell => cell.desiredState);
+    this.cellGroups = this.createGroups([], this.cells, cell => cell.state);
   }
 
   get completed() : boolean {
-    return this.cells.every(cell => cell.isInDesiredState());
+    const desiredFilledGroups = this.desiredCellGroups.filter(group => group.isFilled());
+    const filledGroups = this.cellGroups.filter(group => group.isFilled());
+
+    if (desiredFilledGroups.length !== filledGroups.length) {
+      return false;
+    }
+
+    return _.zip(desiredFilledGroups, filledGroups).every(([desiredGroup, group]) => desiredGroup.size === group.size);
   }
 
-  private createGroups(): Group[] {
-    return this.cells
-      .reduce((groups: Group[], cell: Cell) => {
-        if (groups.length === 0) {
-          return [new Group(cell.desiredState, 1)];
-        }
+  updateCellGroups() {
+    this.cellGroups = this.createGroups([], this.cells, cell => cell.state);
+  }
 
-        const lastGroup = <Group> groups.pop();
+  private createGroups(groups: CellGroup[], ungroupedCells: Cell[], stateGetter: (cell: any) => CellState): CellGroup[] {
+    if (_.size(ungroupedCells) === 0) {
+      return groups;
+    }
 
-        if (lastGroup.type === cell.desiredState) {
-          groups.push(new Group(lastGroup.type, lastGroup.size + 1));
-        } else {
-          groups.push(lastGroup);
-          groups.push(new Group(cell.desiredState, 1));
-        }
+    const groupState = stateGetter(ungroupedCells[0]);
+    const cellsInGroup = _.takeWhile(ungroupedCells, cell => stateGetter(cell) === groupState);
+    const newGroup = new CellGroup(groupState, cellsInGroup.length);
+    groups.push(newGroup);
 
-        return groups;
-
-      }, <Group[]>[])
-      .filter(group => group.type === CellState.FILLED);
+    return this.createGroups(groups, _.drop(ungroupedCells, newGroup.size), stateGetter);
   }
 }
 
 export class CellColumn extends CellRow {}
 
-export default Group;
+export default CellGroup;
