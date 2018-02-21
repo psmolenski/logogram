@@ -2,15 +2,15 @@
     <thead>
         <tr>
             <td></td>
-            <th ng-repeat="groupsInColumn in ::$ctrl.groupsInColumns" class="lgg-board__column" ng-class="{'lgg-board__column--completed' : $ctrl.isColumnCompleted($index)}">
-                <div ng-repeat="group in ::groupsInColumn" class="lgg-board__group">{{group.size}}</div>
+            <th ng-repeat="column in ::$ctrl.cellColumns" class="lgg-board__column" ng-class="{'lgg-board__column--completed' : column.completed}">
+                <div ng-repeat="group in ::column.desiredCellGroups" class="lgg-board__group">{{group.size}}</div>
             </th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="row in ::$ctrl.cellsInRows">
+        <tr ng-repeat="row in ::$ctrl.cellRows">
             <th class="lgg-board__row" ng-class="{'lgg-board__row--completed' : row.completed}">
-                <span ng-repeat="group in ::$ctrl.groupsInRows[$index]" class="lgg-board__group">
+                <span ng-repeat="group in ::row.desiredCellGroups" class="lgg-board__group">
                     {{group.size}}
                 </span>
             </th>
@@ -23,7 +23,7 @@
                       drag-end-action="$ctrl.dragEnd()"></cell>
             </td>
             <th>
-                <span ng-repeat="group in ::$ctrl.groupsInRows[$index]" class="lgg-board__group lgg-board__group--phantom">
+                <span ng-repeat="group in ::row.desiredCellGroups" class="lgg-board__group lgg-board__group--phantom">
                     {{group.size}}
                 </span>
             </th>
@@ -31,8 +31,8 @@
 
         <tr>
             <td></td>
-            <th ng-repeat="groupsInColumn in ::$ctrl.groupsInColumns">
-                <div ng-repeat="group in ::groupsInColumn" class="lgg-board__group lgg-board__group--phantom">{{group.size}}</div>
+            <th ng-repeat="column in ::$ctrl.cellColumns">
+                <div ng-repeat="group in ::column.desiredCellGroups" class="lgg-board__group lgg-board__group--phantom">{{group.size}}</div>
             </th>
         </tr>
     </tbody>

@@ -89,12 +89,12 @@ describe("hasAllCellsInDesiredState", function () {
 
     const board = new Board(pattern);
 
-    board.cellsInRows[0].cells[0].blank();
-    board.cellsInRows[0].cells[1].fill();
-    board.cellsInRows[1].cells[0].fill();
-    board.cellsInRows[1].cells[1].blank();
+    board.cellRows[0].cells[0].blank();
+    board.cellRows[0].cells[1].fill();
+    board.cellRows[1].cells[0].fill();
+    board.cellRows[1].cells[1].blank();
 
-    board.cellsInRows.forEach(row => {
+    board.cellRows.forEach(row => {
       if (_.isUndefined(row)) {
         return;
       }
@@ -119,12 +119,12 @@ describe("hasAllCellsInDesiredState", function () {
 
     const board = new Board(pattern);
 
-    board.cellsInRows[0].cells[0].flag();
-    board.cellsInRows[0].cells[1].fill();
-    board.cellsInRows[1].cells[0].fill();
-    board.cellsInRows[1].cells[1].flag();
+    board.cellRows[0].cells[0].flag();
+    board.cellRows[0].cells[1].fill();
+    board.cellRows[1].cells[0].fill();
+    board.cellRows[1].cells[1].flag();
 
-    board.cellsInRows.forEach(row => {
+    board.cellRows.forEach(row => {
       if (_.isUndefined(row)) {
         return;
       }
@@ -149,10 +149,10 @@ describe("hasAllCellsInDesiredState", function () {
 
     const board = new Board(pattern);
 
-    board.cellsInRows[0].cells[0].blank();
-    board.cellsInRows[0].cells[1].fill();
-    board.cellsInRows[1].cells[0].blank(); //should be filled
-    board.cellsInRows[1].cells[1].blank();
+    board.cellRows[0].cells[0].blank();
+    board.cellRows[0].cells[1].fill();
+    board.cellRows[1].cells[0].blank(); //should be filled
+    board.cellRows[1].cells[1].blank();
 
     expect(board.hasAllCellsInDesiredState()).toBeFalsy();
   });

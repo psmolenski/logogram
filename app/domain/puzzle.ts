@@ -2,19 +2,15 @@ import Board from "./board";
 import Cell from "./cell";
 import * as _ from "lodash";
 import Group from "./group";
+import { GridPattern } from "../data/grids";
 
 class Puzzle {
+  readonly board: Board;
   completed: boolean;
 
-  public readonly board: Board;
-  public readonly groupsInRows: Group[][];
-  public readonly groupsInColumns: Group[][];
 
-  constructor(pattern: number[][]){
+  constructor(pattern: GridPattern){
     this.board = new Board(pattern);
-
-    this.groupsInRows = pattern.map(row => this.createGroups(row));
-    this.groupsInColumns = _.zip(...pattern).map((column : number[]) => this.createGroups(column));
   }
 
   toggleCellFill(cell: Cell) {
@@ -47,28 +43,6 @@ class Puzzle {
 
   checkIfPuzzleIsSolved() {
     this.completed = this.board.hasAllCellsInDesiredState();
-  }
-
-  private createGroups(arr : number[]): Group[] {
-    return arr
-      .reduce((groups: Group[], cellType: number) => {
-        if (groups.length === 0) {
-          return [new Group(cellType, 1)];
-        }
-
-        const lastGroup = <Group> groups.pop();
-
-        if (lastGroup.type === cellType) {
-          groups.push(new Group(lastGroup.type, lastGroup.size + 1));
-        } else {
-          groups.push(lastGroup);
-          groups.push(new Group(cellType, 1));
-        }
-
-        return groups;
-
-      }, <Group[]>[])
-      .filter(group => group.type === 1);
   }
 }
 

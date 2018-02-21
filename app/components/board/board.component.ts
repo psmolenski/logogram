@@ -26,8 +26,12 @@ class BoardComponentController {
     this.ngModel.$setViewValue(newBoard);
   }
 
-  get cellsInRows() {
-    return this.board.cellsInRows;
+  get cellRows() {
+    return this.board.cellRows;
+  }
+
+  get cellColumns() {
+    return this.board.cellColumns;
   }
 
   toggleCellFill(cell: Cell) {
@@ -86,6 +90,14 @@ class BoardComponentController {
     return componentAtPosition.cell;
   }
 
+  isColumnCompleted(columnIndex : number) : boolean {
+    return false;
+  }
+
+  isRowCompleted(rowIndex : number) : boolean {
+    return false;
+  }
+
 }
 
 export {BoardComponentController};
@@ -97,8 +109,6 @@ export default {
   },
   bindings: {
     size: '<',
-    groupsInRows: '<',
-    groupsInColumns: '<',
     toggleCellFillAction: '&',
     toggleCellFlagAction: '&',
     toggleUsingDraggedCellAction: '&',
