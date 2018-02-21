@@ -6,6 +6,7 @@ import {INgModelController} from "angular";
 import {CellComponentController} from "../cell/cell.component";
 import * as _ from "lodash";
 import CellDragHandler from "../../domain/cell-drag-handler";
+import { CellColumn, CellRow } from '../../domain/group';
 
 class BoardComponentController {
   private ngModel: INgModelController;
@@ -13,6 +14,7 @@ class BoardComponentController {
   private toggleCellFillAction : Function;
   private toggleCellFlagAction : Function;
   private toggleUsingDraggedCellAction : Function;
+  private flagCellGroupAction : Function;
   private dragEndAction : Function;
 
   private cellComponents : CellComponentController[] = [];
@@ -44,6 +46,10 @@ class BoardComponentController {
 
   toggleDragState(draggedCell : Cell, cell: Cell) {
     this.toggleUsingDraggedCellAction({draggedCell, cell});
+  }
+
+  flagCellGroup(group: CellRow | CellColumn) {
+    this.flagCellGroupAction({group});
   }
 
   registerCellComponent(cellComponent: CellComponentController) {
@@ -112,6 +118,7 @@ export default {
     toggleCellFillAction: '&',
     toggleCellFlagAction: '&',
     toggleUsingDraggedCellAction: '&',
+    flagCellGroupAction: '&',
     dragEndAction: '&'
   },
   controller: BoardComponentController

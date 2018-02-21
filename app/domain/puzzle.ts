@@ -1,7 +1,7 @@
 import Board from "./board";
 import Cell from "./cell";
 import * as _ from "lodash";
-import Group from "./group";
+import Group, { CellColumn, CellRow } from "./group";
 import { GridPattern } from "../data/grids";
 
 class Puzzle {
@@ -27,6 +27,18 @@ class Puzzle {
     } else {
       cell.flag();
     }
+  }
+
+  flagBlankCellsInCompletedGroup(group : CellRow | CellColumn){
+    if (!group.completed) {
+      return;
+    }
+
+    group.cells.forEach(cell => {
+      if (cell.isBlank()) {
+        cell.flag();
+      }
+    });
   }
 
   applyStateOfDraggedCell(draggedCell : Cell, cell: Cell) {
