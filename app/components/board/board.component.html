@@ -6,7 +6,10 @@
                 class="lgg-board__column" 
                 ng-class="{'lgg-board__column--completed' : column.completed}"
                 ng-click="$ctrl.flagCellGroup(column)">
-                <div ng-repeat="group in ::column.desiredCellGroups" class="lgg-board__group" ng-show="::group.isFilled()">{{::group.size}}</div>
+                <div ng-repeat="group in ::column.desiredCellGroups" 
+                    class="lgg-board__group"
+                    ng-class="{'lgg-board__group--completed' : group.completed}" 
+                    ng-show="::group.isFilled()">{{::group.size}}</div>
             </th>
         </tr>
     </thead>
@@ -15,7 +18,10 @@
             <th class="lgg-board__row" 
                 ng-class="{'lgg-board__row--completed' : row.completed}"
                 ng-click="$ctrl.flagCellGroup(row)">
-                <span ng-repeat="group in ::row.desiredCellGroups" class="lgg-board__group" ng-show="::group.isFilled()">
+                <span ng-repeat="group in ::row.desiredCellGroups" 
+                    class="lgg-board__group" 
+                    ng-class="{'lgg-board__group--completed' : group.completed}"
+                    ng-show="::group.isFilled()">
                     {{::group.size}}
                 </span>
             </th>
@@ -29,7 +35,7 @@
             </td>
             <th>
                 <span ng-repeat="group in ::row.desiredCellGroups" class="lgg-board__group lgg-board__group--phantom">
-                    {{group.size}}
+                    {{::group.size}}
                 </span>
             </th>
         </tr>
@@ -37,7 +43,7 @@
         <tr>
             <td></td>
             <th ng-repeat="column in ::$ctrl.cellColumns">
-                <div ng-repeat="group in ::column.desiredCellGroups" class="lgg-board__group lgg-board__group--phantom">{{group.size}}</div>
+                <div ng-repeat="group in ::column.desiredCellGroups" class="lgg-board__group lgg-board__group--phantom">{{::group.size}}</div>
             </th>
         </tr>
     </tbody>

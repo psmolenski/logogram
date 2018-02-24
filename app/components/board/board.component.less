@@ -6,8 +6,11 @@
   &__column, &__row {
     &--completed {
       background: #72cbfd;
-      color: #fbfbfb;
       cursor: pointer;
+    
+      .lgg-board__group {
+        color: #fbfbfb;
+      }
     }
   }
 
@@ -16,6 +19,10 @@
 
     &--phantom {
       visibility: hidden;
+    }
+
+    &--completed {
+      color: #72cbfd;
     }
   }
 
