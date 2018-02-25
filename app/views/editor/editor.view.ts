@@ -1,9 +1,17 @@
 import { StateService } from "@uirouter/core";
-import { MenuItemsList } from "../../services/modal.service";
+import { MenuItemsList, ModalService } from "../../services/modal.service";
 import Editor from "../../domain/editor";
 
 export class EditorViewController {
     readonly menuItems: MenuItemsList = {
+        clear: {
+            text: 'Clear Board',
+            action: () => this.$state.reload()
+        },
+        changeSize: {
+            text: 'Change Size',
+            action: () => this.showSizesMenu()
+        },
         selectPuzzle: {
             text: 'Select Puzzle',
             action: () => this.$state.go('select-puzzle')
@@ -14,10 +22,10 @@ export class EditorViewController {
         }
     };
 
-    editor: Editor;
+    readonly editor: Editor;
 
-    constructor(readonly $state : StateService){
-        this.editor = new Editor(5, 5);
+    constructor(readonly $state : StateService, readonly ModalService: ModalService){
+        this.editor = new Editor(this.$state.params.numberOfRows, this.$state.params.numberOfColumns);
     }
 
     get board() {
@@ -26,6 +34,23 @@ export class EditorViewController {
 
     get size() {
         return 'small';
+    }
+
+    showSizesMenu() {
+        this.ModalService.menu({
+            '5x5': {
+                text: '5x5',
+                action: () => this.changeSize(5, 5)
+            },
+            '10x10': {
+                text: '10x10',
+                action: () => this.changeSize(10, 10)
+            }
+        })
+    }
+
+    changeSize(numberOfRows: number, numberOfColumns: number) {
+        this.$state.go('editor', {numberOfRows, numberOfColumns});
     }
 }
 

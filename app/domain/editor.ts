@@ -18,13 +18,21 @@ class Editor {
         }
     }
 
-    applyStateOfDraggedCell(draggedCell : Cell, cell: Cell) {
+    applyStateOfDraggedCell(draggedCell: Cell, cell: Cell) {
         if (draggedCell.isFilled() && cell.isBlank()) {
-          cell.fill();
-        } else {
-          cell.blank();
-        } 
-      }
+            cell.fill();
+        } else if (draggedCell.isBlank() && cell.isFilled()){
+            cell.blank();
+        }
+    }
+
+    getPattern() {
+        const pattern = this.board.cellRows.map(row => {
+            return row.cells.map(cell => cell.isFilled() ? 1 : 0);
+        });
+
+        console.log(JSON.stringify(pattern));
+    }
 }
 
 export default Editor;

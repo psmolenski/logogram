@@ -26,7 +26,11 @@ export default function routing($stateProvider : StateProvider, $urlRouterProvid
     .state('editor', {
         template: editorViewTpl,
         controller: EditorViewController,
-        controllerAs: '$ctrl'
+        controllerAs: '$ctrl',
+        params: {
+            numberOfRows: 5,
+            numberOfColumns: 5
+        }
     });
 
     $urlRouterProvider.otherwise(($injector) => {
