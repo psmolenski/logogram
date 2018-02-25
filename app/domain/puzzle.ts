@@ -11,6 +11,7 @@ class Puzzle {
 
   constructor(pattern: GridPattern){
     this.board = new Board(pattern);
+    this.completed = false;
   }
 
   toggleCellFill(cell: Cell) {
