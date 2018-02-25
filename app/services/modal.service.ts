@@ -63,6 +63,10 @@ class ModalService {
             }, <ButtonList> {})
         })
             .then(selectedItemName => {
+                if (selectedItemName === null) {
+                    return;
+                }
+
                 menuItems[<string> selectedItemName].action();
             });
     }
