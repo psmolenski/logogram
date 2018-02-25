@@ -31,7 +31,6 @@ class BoardComponentController implements IOnInit{
 
   $onInit(): void {
     this.options = _.extend(this.options, this.customOptions);
-    console.log(this.options);
   }
 
   get board() : Board {
