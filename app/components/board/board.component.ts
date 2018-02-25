@@ -2,23 +2,37 @@ import tpl from './board.component.html';
 import './board.component.less';
 import Board from "../../domain/board";
 import Cell from "../../domain/cell";
-import {INgModelController} from "angular";
+import {INgModelController, IParseService, IOnInit} from "angular";
 import {CellComponentController} from "../cell/cell.component";
 import * as _ from "lodash";
 import CellDragHandler from "../../domain/cell-drag-handler";
 import { CellColumn, CellRow } from '../../domain/group';
+import { isUndefined } from 'util';
 
-class BoardComponentController {
-  private ngModel: INgModelController;
-  private size: string;
-  private toggleCellFillAction : Function;
-  private toggleCellFlagAction : Function;
-  private toggleUsingDraggedCellAction : Function;
-  private flagCellGroupAction : Function;
-  private dragEndAction : Function;
+interface BoardComponentOptions {
+  displayHeaders: boolean;
+}
+
+class BoardComponentController implements IOnInit{
+  ngModel: INgModelController;
+  size: string;
+  toggleCellFillAction : Function;
+  toggleCellFlagAction : Function;
+  toggleUsingDraggedCellAction : Function;
+  flagCellGroupAction : Function;
+  dragEndAction : Function;
+  customOptions: BoardComponentOptions;
+  options: BoardComponentOptions = {
+    displayHeaders: true
+  };
 
   private cellComponents : CellComponentController[] = [];
   private dragHandler : CellDragHandler | null = null;
+
+  $onInit(): void {
+    this.options = _.extend(this.options, this.customOptions);
+    console.log(this.options);
+  }
 
   get board() : Board {
     return this.ngModel.$viewValue;
@@ -119,7 +133,8 @@ export default {
     toggleCellFlagAction: '&',
     toggleUsingDraggedCellAction: '&',
     flagCellGroupAction: '&',
-    dragEndAction: '&'
+    dragEndAction: '&',
+    customOptions: '<options' 
   },
   controller: BoardComponentController
 };

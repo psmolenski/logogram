@@ -1,5 +1,5 @@
 <table class="lgg-board lgg-board--{{::$ctrl.size}}" ng-mouseleave="$ctrl.dragEnd()">
-    <thead>
+    <thead ng-if="::$ctrl.options.displayHeaders">
         <tr>
             <td></td>
             <th ng-repeat="column in ::$ctrl.cellColumns" 
@@ -15,7 +15,8 @@
     </thead>
     <tbody>
         <tr ng-repeat="row in ::$ctrl.cellRows">
-            <th class="lgg-board__row" 
+            <th ng-if="::$ctrl.options.displayHeaders"
+                class="lgg-board__row" 
                 ng-class="{'lgg-board__row--completed' : row.completed}"
                 ng-click="$ctrl.flagCellGroup(row)">
                 <span ng-repeat="group in ::row.desiredCellGroups" 
@@ -33,14 +34,14 @@
                       drag-move-action="$ctrl.dragMove(x, y)"
                       drag-end-action="$ctrl.dragEnd()"></cell>
             </td>
-            <th>
+            <th ng-if="::$ctrl.options.displayHeaders">
                 <span ng-repeat="group in ::row.desiredCellGroups" class="lgg-board__group lgg-board__group--phantom">
                     {{::group.size}}
                 </span>
             </th>
         </tr>
 
-        <tr>
+        <tr ng-if="::$ctrl.options.displayHeaders">
             <td></td>
             <th ng-repeat="column in ::$ctrl.cellColumns">
                 <div ng-repeat="group in ::column.desiredCellGroups" class="lgg-board__group lgg-board__group--phantom">{{::group.size}}</div>
