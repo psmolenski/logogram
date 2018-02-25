@@ -1,7 +1,7 @@
 <table class="lgg-board lgg-board--{{::$ctrl.size}}" ng-mouseleave="$ctrl.dragEnd()">
     <thead ng-show="::$ctrl.options.displayHeaders">
         <tr>
-            <td></td>
+            <th></th>
             <th ng-repeat="column in ::$ctrl.cellColumns" 
                 class="lgg-board__column" 
                 ng-class="{'lgg-board__column--completed' : column.completed}"
@@ -42,7 +42,7 @@
         </tr>
 
         <tr ng-show="::$ctrl.options.displayHeaders">
-            <td></td>
+            <th></th>
             <th ng-repeat="column in ::$ctrl.cellColumns">
                 <div ng-repeat="group in ::column.desiredCellGroups" class="lgg-board__group lgg-board__group--phantom">{{::group.size}}</div>
             </th>
