@@ -46,8 +46,8 @@ export class CellRow {
     const desiredFilledGroups = this.desiredCellGroups.filter(group => group.isFilled());
     const numberOfDesiredFilledGroups = desiredFilledGroups.length;
     let [leftGroups, rightGroups] = _.partition(this.cellGroups, group => group.start <= this.cells.length - group.end);
-    leftGroups = leftGroups.filter(group => !group.isFlagged());
-    rightGroups = rightGroups.filter(group => !group.isFlagged());
+    leftGroups = _(leftGroups).filter(group => !group.isFlagged()).take(numberOfDesiredFilledGroups).value();
+    rightGroups = _(rightGroups).filter(group => !group.isFlagged()).takeRight(numberOfDesiredFilledGroups).value();
 
     const completedGroupsLeftToRight = _(desiredFilledGroups)
                     .zip(leftGroups)
