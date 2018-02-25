@@ -1,10 +1,11 @@
 .lgg-board__cell {
   border: 1px solid #333;
-  text-align: center;
-  line-height: 30px;
-  font-size: 20px;
   cursor: pointer;
   user-select: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &--filled {
     background: #333333;
@@ -13,8 +14,10 @@
   &--flagged {
     background: #f0f0f0;
     &:after {
+      display: inline-block;
       content: '×';
       color: #bbb;
+      font-size: 20px;
     }
   }
 }
