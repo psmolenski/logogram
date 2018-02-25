@@ -1,8 +1,10 @@
 import puzzleViewTpl from './views/puzzle/puzzle.view.html';
 import selectPuzzleViewTpl from './views/select-puzzle/select-puzzle.view.html';
+import editorViewTpl from './views/editor/editor.view.html';
 import { StateProvider, UrlRouterProvider } from '@uirouter/angularjs';
 import PuzzleViewController from './views/puzzle/puzzle.view';
 import SelectPuzzleViewController from './views/select-puzzle/select-puzzle.view';
+import EditorViewController from './views/editor/editor.view';
 
 export default function routing($stateProvider : StateProvider, $urlRouterProvider : UrlRouterProvider) {
     $stateProvider
@@ -20,6 +22,11 @@ export default function routing($stateProvider : StateProvider, $urlRouterProvid
                 raw: true
             }
         }
+    })
+    .state('editor', {
+        template: editorViewTpl,
+        controller: EditorViewController,
+        controllerAs: '$ctrl'
     });
 
     $urlRouterProvider.otherwise(($injector) => {

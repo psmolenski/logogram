@@ -2,6 +2,7 @@ import GridsRepository from "../../services/grids-repository.service";
 import { MenuItemsList, ModalService } from "../../services/modal.service";
 import './select-puzzle.view.less';
 import { GridGroup } from "../../domain/grid";
+import { StateService } from "@uirouter/core";
 
 class SelectPuzzleViewController {
     readonly menuItems: MenuItemsList = {
@@ -9,13 +10,17 @@ class SelectPuzzleViewController {
             text: 'Reset Game',
             action: () => this.resetCompletedGrids()
         },
+        editor: {
+            text: 'Editor',
+            action: () => this.$state.go('editor')
+        },
         continue: {
             text: 'Continue',
             action: () => { }
         }
     };
 
-    constructor(readonly GridsRepositoryService: GridsRepository, readonly ModalService : ModalService){}    
+    constructor(readonly $state: StateService, readonly GridsRepositoryService: GridsRepository, readonly ModalService : ModalService){}    
 
     get gridsInGroups() {
         return this.GridsRepositoryService.gridsInGroups;

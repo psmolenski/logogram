@@ -1,4 +1,5 @@
 import { GridPatternGroup } from "../data/grids";
+import * as _ from 'lodash';
 
 export interface Grid {
     readonly pattern: number[][];
@@ -25,6 +26,10 @@ function createGridFromPattern(group: GridPatternGroup, pattern: number[][], gri
         size: group.gridSize,
         progress: gridProgress || {completed: false}
     }
+}
+
+export function createEmptyGridPattern(numberOfRows: number, numberOfColumns: number) {
+    return _.range(numberOfRows).map(() => _.fill(Array(numberOfColumns), 0));
 }
 
 export { createGridFromPattern };

@@ -1,0 +1,7 @@
+<menu menu-items="$ctrl.menuItems"></menu>
+
+<board ng-model="$ctrl.board" 
+        size="$ctrl.size" 
+        toggle-cell-fill-action="$ctrl.editor.toggleCellFill(cell)"
+        toggle-using-dragged-cell-action="$ctrl.editor.applyStateOfDraggedCell(draggedCell, cell)"
+        options="{displayHeaders: false}"></board>
