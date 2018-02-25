@@ -3,6 +3,7 @@ import {Promise} from "bluebird";
 import { SwalParams } from "sweetalert/typings/core";
 import { ButtonList } from "sweetalert/typings/modules/options/buttons";
 import { IScope, IQService } from "angular";
+import { isUndefined } from "util";
 
 class ModalService {
 
@@ -57,7 +58,8 @@ class ModalService {
                 const menuItem = menuItems[itemName];
                 buttons[itemName] = {
                     text: menuItem.text,
-                    className: 'btn--menu-item'
+                    className: 'btn--menu-item',
+                    visible: isUndefined(menuItem.visible) ? true : menuItem.visible
                 };
                 return buttons;
             }, <ButtonList> {})
@@ -78,7 +80,8 @@ export interface MenuItemsList {
 
 export interface MenuItem {
     text: string;
-    action: () => void
+    action: () => void,
+    visible?: boolean
 }
 
 export {ModalService};

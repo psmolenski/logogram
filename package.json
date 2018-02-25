@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",
-    "start": "webpack-dev-server --open",
+    "start": "editor=true webpack-dev-server",
     "test:e2e": "npm-run-all --parallel --race server protractor",
     "protractor": "protractor e2e/protractor.config.js",
     "server": "http-server dist -c-1 ",

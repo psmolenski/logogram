@@ -2,7 +2,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
-
 module.exports = {
   entry: {
     vendor: ['angular'],
@@ -69,6 +68,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'app/index.html',
       hash: true
+    }),
+    new webpack.EnvironmentPlugin({
+      editor: false
     })
   ],
   devtool: 'source-map'

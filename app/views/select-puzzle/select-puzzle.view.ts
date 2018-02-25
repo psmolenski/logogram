@@ -12,7 +12,8 @@ class SelectPuzzleViewController {
         },
         editor: {
             text: 'Editor',
-            action: () => this.$state.go('editor')
+            action: () => this.$state.go('editor'),
+            visible: process.env.editor === 'true'
         },
         continue: {
             text: 'Continue',
