@@ -2,18 +2,19 @@ import tpl from './board.component.html';
 import './board.component.less';
 import Board from "../../domain/board";
 import Cell from "../../domain/cell";
-import {INgModelController, IParseService, IOnInit} from "angular";
+import {INgModelController, IParseService, IOnInit, IPostLink, IRootElementService, IScope} from "angular";
 import {CellComponentController} from "../cell/cell.component";
 import * as _ from "lodash";
 import CellDragHandler from "../../domain/cell-drag-handler";
 import { CellColumn, CellRow } from '../../domain/group';
 import { isUndefined } from 'util';
+import { TapHandler } from './tap-handler';
 
 interface BoardComponentOptions {
   displayHeaders: boolean;
 }
 
-class BoardComponentController implements IOnInit{
+class BoardComponentController implements IOnInit, IPostLink{
   ngModel: INgModelController;
   size: string;
   toggleCellFillAction : Function;
@@ -28,9 +29,125 @@ class BoardComponentController implements IOnInit{
 
   private cellComponents : CellComponentController[] = [];
   private dragHandler : CellDragHandler | null = null;
+  private tapHandler : TapHandler;
+
+  constructor(readonly $scope: IScope, readonly $element: IRootElementService){}
 
   $onInit(): void {
     this.options = _.extend(this.options, this.customOptions);
+
+    const handlerBuilder = TapHandler.builder();
+    handlerBuilder.setSingleTapAction((cell: Cell) => {
+      this.$scope.$applyAsync(() => {
+        this.toggleCellFill(cell);
+        this.dragStart(cell);
+      });
+    });
+
+    handlerBuilder.setDoubleTapAction((cell: Cell) => {
+      this.$scope.$applyAsync(() => {
+        this.toggleCellFlag(cell);
+        this.dragStart(cell);
+      });
+    });
+
+    this.tapHandler = handlerBuilder.build();
+  }
+
+  $postLink(): void {
+    this.$element.on('touchstart', (event) => {
+      const cell = this.getCellFromEvent(event);
+
+      if (cell === null) {
+        return;
+      }
+
+      this.tapHandler.tap(cell);
+
+      event.preventDefault();
+    });
+
+    this.$element.on('touchmove', (event : any) => {
+      const cell = this.getCellFromEvent(event);
+
+      if (cell === null) {
+        return;
+      }
+
+      const touch = event.touches[0];
+      const x = Math.floor(touch.clientX);
+      const y = Math.floor(touch.clientY);
+
+      this.$scope.$applyAsync(() => {
+        this.dragMove(x, y);
+      });
+
+      event.preventDefault();
+    });
+
+    this.$element.on('touchend', (event) => {
+      const cell = this.getCellFromEvent(event);
+
+      if (cell === null) {
+        return;
+      }
+
+      this.$scope.$applyAsync(() => {
+        this.dragEndAction();
+      });
+
+      event.preventDefault();
+    });
+
+    this.$element.on('mousedown', (event) => {
+      const cell = this.getCellFromEvent(event);
+
+      if (cell === null) {
+        return;
+      }
+
+      this.$scope.$applyAsync(() => {
+        if (event.button === 0) {
+          this.toggleCellFill(cell)
+        } else if (event.button === 1) {
+          this.toggleCellFlag(cell);
+        }
+
+        this.dragStart(cell);
+      });
+    });
+
+    this.$element.on('mousemove', ($event) => {
+      this.$scope.$applyAsync(() => {
+        const x = Math.floor($event.clientX);
+        const y =  Math.floor($event.clientY);
+
+        this.dragMove(x, y);
+      });
+    });
+
+    this.$element.on('mouseup', ($event) => {
+      this.$scope.$applyAsync(() => {
+        this.dragEnd();
+      });
+    });
+  }
+
+  getCellFromEvent(event: Event) : Cell | null{
+    const targetNode = event.target as HTMLElement;
+    const cellNode = targetNode.parentElement;
+    
+    if (cellNode === null || cellNode.nodeName !== 'CELL') {
+      return null;
+    }
+
+    const cellComponent = _.find(this.cellComponents, cellComponent => cellComponent.$element[0] === cellNode);
+
+    if (!cellComponent) {
+      return null;
+    }
+
+    return cellComponent.cell;
   }
 
   get board() : Board {

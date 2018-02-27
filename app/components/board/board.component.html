@@ -27,12 +27,7 @@
                 </span>
             </th>
             <td ng-repeat="cell in ::row.cells">
-                <cell ng-model="cell"
-                      toggle-fill-action="$ctrl.toggleCellFill(cell)"
-                      toggle-flag-action="$ctrl.toggleCellFlag(cell)"
-                      drag-start-action="$ctrl.dragStart(cell)"
-                      drag-move-action="$ctrl.dragMove(x, y)"
-                      drag-end-action="$ctrl.dragEnd()"></cell>
+                <cell ng-model="cell"></cell>
             </td>
             <th ng-show="::$ctrl.options.displayHeaders">
                 <span ng-repeat="group in ::row.desiredCellGroups" class="lgg-board__group lgg-board__group--phantom">
